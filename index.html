@@ -19,7 +19,10 @@
   <header id="topbar"></header>
 
   <!-- ページ本体 -->
-  <main id="page-content" class="fade-in">
+  <main id="page-content">
+
+  <!-- ===== ダッシュボードパネル ===== -->
+  <div id="panel-dashboard" class="panel active fade-in">
 
     <!-- ヘッダタイトル -->
     <div class="page-title">
@@ -35,7 +38,7 @@
         ⚡ AI4S科学研究革新プログラム370億円基金の戦略方針が確定 &nbsp;&nbsp;
         ⚡ 筑波大学DHI棟（共創ラボ型AI拠点）2026年12月竣工予定
       </span>
-      <a href="policy.html" class="ticker-cta">詳細を確認 →</a>
+      <a href="#" onclick="AI4S.navigate('policy'); return false;" class="ticker-cta">詳細を確認 →</a>
     </div>
 
     <!-- KPIサマリー -->
@@ -81,7 +84,7 @@
         <strong>【最優先・今月中に判断必要】</strong>
         MEXT「AI for Scienceによる科学研究革新プログラム」基金（370億円）の戦略方針が確定。
         チャレンジ型（50億円）は早期公募が予想される。URAを中心にした応募準備チームの編成を至急検討してください。
-        <a href="policy.html" style="color:#b91c1c;font-weight:700;">→ 公募詳細を確認</a>
+        <a href="#" onclick="AI4S.navigate('policy'); return false;" style="color:#b91c1c;font-weight:700;">→ 公募詳細を確認</a>
       </div>
     </div>
 
@@ -92,7 +95,7 @@
       <div class="card">
         <div class="card-header">
           <h3>⚡ 今週の重要トピック</h3>
-          <a href="policy.html" class="see-all">すべて見る</a>
+          <a href="#" onclick="AI4S.navigate('policy'); return false;" class="see-all">すべて見る</a>
         </div>
         <div class="card-body" id="topTopics">
           <!-- JSで生成 -->
@@ -103,7 +106,7 @@
       <div class="card">
         <div class="card-header">
           <h3>⏰ 締切が近い公募・制度</h3>
-          <a href="policy.html" class="see-all">一覧へ</a>
+          <a href="#" onclick="AI4S.navigate('policy'); return false;" class="see-all">一覧へ</a>
         </div>
         <div class="card-body" id="deadlineItems">
           <!-- JSで生成 -->
@@ -114,7 +117,7 @@
     <!-- 大学ベンチマーク概要 -->
     <div class="section-header">
       <h2>🏛️ 注目大学の最新アクション</h2>
-      <a href="benchmark.html" class="see-all">比較表を見る</a>
+      <a href="#" onclick="AI4S.navigate('benchmark'); return false;" class="see-all">比較表を見る</a>
     </div>
     <div class="three-col" id="benchCards">
       <!-- JSで生成 -->
@@ -127,7 +130,7 @@
       <div class="card">
         <div class="card-header">
           <h3>🏢 注目企業の大学連携動向</h3>
-          <a href="industry.html" class="see-all">全企業を見る</a>
+          <a href="#" onclick="AI4S.navigate('industry'); return false;" class="see-all">全企業を見る</a>
         </div>
         <div class="card-body" id="companyWatch">
           <!-- JSで生成 -->
@@ -138,7 +141,7 @@
       <div class="card">
         <div class="card-header">
           <h3>💡 岡大への示唆 TOP 3</h3>
-          <a href="insights.html" class="see-all">全インサイトへ</a>
+          <a href="#" onclick="AI4S.navigate('insights'); return false;" class="see-all">全インサイトへ</a>
         </div>
         <div class="card-body" id="insightTop">
           <!-- JSで生成 -->
@@ -149,7 +152,7 @@
     <!-- 政策タイムライン（直近） -->
     <div class="section-header" style="margin-top:8px;">
       <h2>📅 政策タイムライン（直近）</h2>
-      <a href="timeline.html" class="see-all">全タイムラインへ</a>
+      <a href="#" onclick="AI4S.navigate('timeline'); return false;" class="see-all">全タイムラインへ</a>
     </div>
     <div class="card">
       <div class="card-body">
@@ -158,6 +161,61 @@
         </div>
       </div>
     </div>
+
+  </div><!-- /#panel-dashboard -->
+
+  <!-- ===== 政策・公募パネル ===== -->
+  <div id="panel-policy" class="panel">
+    <div class="page-title">
+      <h1>📋 政策・公募一覧</h1>
+      <p>進行中・予定の公募・制度情報と最新政策動向</p>
+    </div>
+    <div id="policy-dynamic"></div>
+    <div class="section-header">
+      <h2>📋 公募・制度 完全リスト</h2>
+    </div>
+    <div id="policy-static-list"></div>
+  </div>
+
+  <!-- ===== 大学ベンチマークパネル ===== -->
+  <div id="panel-benchmark" class="panel">
+    <div class="page-title">
+      <h1>🏛️ 大学ベンチマーク</h1>
+      <p>岡山大学が注目すべき大学・研究機関の最新動向と比較</p>
+    </div>
+    <div id="benchmark-list"></div>
+  </div>
+
+  <!-- ===== 産業連携ウォッチパネル ===== -->
+  <div id="panel-industry" class="panel">
+    <div class="page-title">
+      <h1>🏢 産業連携ウォッチ</h1>
+      <p>AI4S分野での産学連携を積極推進している注目企業の動向</p>
+    </div>
+    <div id="industry-list"></div>
+  </div>
+
+  <!-- ===== 岡大インサイトパネル ===== -->
+  <div id="panel-insights" class="panel">
+    <div class="page-title">
+      <h1>💡 岡大インサイト全件</h1>
+      <p>岡山大学の執行部・URA・CDが今すぐ対応すべき示唆・提言</p>
+    </div>
+    <div id="insights-list"></div>
+  </div>
+
+  <!-- ===== 政策タイムラインパネル ===== -->
+  <div id="panel-timeline" class="panel">
+    <div class="page-title">
+      <h1>📅 政策タイムライン</h1>
+      <p>AI4S関連の政策・制度・大学動向の時系列まとめ</p>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="timeline-wrap" id="fullTimeline"></div>
+      </div>
+    </div>
+  </div>
 
   </main>
 </div>
@@ -169,6 +227,8 @@
 <script src="js/common.js"></script>
 <script>
 // ── ダッシュボード初期化 ───────────────────────────────────────
+var _dynamicData = null;
+
 document.addEventListener('DOMContentLoaded', function() {
   AI4S.initSidebar('dashboard', '🏠 Executive Dashboard');
 
@@ -184,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // index1.txt方式でデータを動的にロード
   AI4S.init(function(data) {
+    _dynamicData = data;
     // top_topics があれば優先して重要トピックセクションに表示
     var topItems = (data.TOP_TOPICS && data.TOP_TOPICS.length > 0)
       ? data.TOP_TOPICS
@@ -192,6 +253,14 @@ document.addEventListener('DOMContentLoaded', function() {
       renderTopTopics(topItems);
     }
   });
+
+  // パネルレンダラー登録
+  AI4S.registerPanel('dashboard', function() {});
+  AI4S.registerPanel('policy', renderPolicyPanel);
+  AI4S.registerPanel('benchmark', renderBenchmarkPanel);
+  AI4S.registerPanel('industry', renderIndustryPanel);
+  AI4S.registerPanel('insights', renderInsightsPanel);
+  AI4S.registerPanel('timeline', renderTimelinePanel);
 });
 
 // ── 今週の重要トピック ────────────────────────────────────────
@@ -336,7 +405,7 @@ function renderBenchCards() {
       + '</div>'
       + '<div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;">'
       + '<div class="relevance-indicator" title="岡大関連度">' + AI4S.renderRelevance(b.relevance, b.relevanceLevel) + '</div>'
-      + '<a href="benchmark.html" class="btn btn-sm btn-outline">詳細を見る</a>'
+      + '<a href="#" onclick="AI4S.navigate(\'benchmark\'); return false;" class="btn btn-sm btn-outline">詳細を見る</a>'
       + '</div>'
       + '</div>';
   }).join('');
@@ -384,7 +453,7 @@ function renderInsightTop() {
       + ins.title.replace('【最優先】', '').replace('【緊急】', '')
       + '</div>'
       + '<div style="font-size:.78rem;color:var(--text-muted);margin-bottom:6px;">' + ins.summary.slice(0, 80) + '…</div>'
-      + '<a href="insights.html" class="btn btn-sm btn-gold">対応を確認する</a>'
+      + '<a href="#" onclick="AI4S.navigate(\'insights\'); return false;" class="btn btn-sm btn-gold">対応を確認する</a>'
       + '</div>';
   }).join('');
   document.getElementById('insightTop').innerHTML = html;
@@ -407,6 +476,161 @@ function renderDashTimeline() {
       + '</div>';
   }).join('');
   document.getElementById('dashTimeline').innerHTML = html;
+}
+
+// ── 政策・公募パネル ──────────────────────────────────────────
+function renderPolicyPanel() {
+  // 静的 POLICY_DATA の完全リスト
+  var staticHtml = AI4S.POLICY_DATA.map(function(item) {
+    var days = AI4S.daysUntil(item.deadline);
+    var daysClass = days <= 30 ? 'deadline-near' : '';
+    var daysLabel = days < 0 ? '期限切れ' : days === 0 ? '本日締切' : '残り' + days + '日';
+    return '<div class="news-item">'
+      + '<div class="news-content" style="width:100%">'
+      + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">'
+      + '<span class="news-tag ' + AI4S.getTagClass(item.type) + '">' + item.type + '</span>'
+      + '<span class="priority-badge ' + AI4S.getPriorityClass(item.priority) + '">' + item.priority + '評価</span>'
+      + '<span class="news-tag tag-fund" style="margin-left:auto;">' + item.status + '</span>'
+      + '</div>'
+      + '<div class="news-title"><a href="' + item.url + '" target="_blank">' + item.title + '</a></div>'
+      + '<div class="news-meta">'
+      + '<span>🏢 ' + item.org + '</span>'
+      + '<span>💰 ' + item.budget + '</span>'
+      + '<span class="' + daysClass + '">⏰ ' + daysLabel + '（' + item.deadline + '）</span>'
+      + '</div>'
+      + '<div class="news-insight">💡 ' + item.insight + '</div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+  document.getElementById('policy-static-list').innerHTML = '<div class="card"><div class="card-body">' + staticHtml + '</div></div>';
+
+  // 動的データ（news_data.json）から政策・公募カテゴリを抽出
+  var dynamicEl = document.getElementById('policy-dynamic');
+  if (!_dynamicData) { dynamicEl.innerHTML = ''; return; }
+  var allItems = (_dynamicData.TOP_TOPICS || []).concat(_dynamicData.DATA || []);
+  var filtered = AI4S.dedupeByUrl(allItems).filter(function(d) {
+    return d.category === 'fund' || d.category === 'policy'
+      || d.info_type === '公募' || d.info_type === '政策';
+  });
+  if (filtered.length === 0) { dynamicEl.innerHTML = ''; return; }
+  var dynHtml = '<div class="section-header"><h2>⚡ 最新情報（自動収集）</h2></div>'
+    + '<div class="card"><div class="card-body">'
+    + filtered.map(function(d) {
+        return '<div class="news-item">'
+          + '<span class="news-tag ' + AI4S.getTagClass(d.info_type || '') + '">' + (d.info_type || '情報') + '</span>'
+          + '<div class="news-content">'
+          + '<div class="news-title"><a href="' + (d.url || '#') + '" target="_blank">' + (d.title || '') + '</a></div>'
+          + '<div class="news-meta">'
+          + '<span>📅 ' + AI4S.formatDate(d.date) + '</span>'
+          + (d.org ? '<span>🏢 ' + d.org + '</span>' : '')
+          + '</div>'
+          + ((d.impact_analysis || d.summary) ? '<div class="news-insight">💡 ' + (d.impact_analysis || d.summary) + '</div>' : '')
+          + '</div>'
+          + '</div>';
+      }).join('')
+    + '</div></div>';
+  dynamicEl.innerHTML = dynHtml;
+}
+
+// ── 大学ベンチマークパネル ────────────────────────────────────
+function renderBenchmarkPanel() {
+  var typeColorMap = {
+    '基盤AI・国際連携型':   '#1d4ed8',
+    'AI4S・共創施設型':     '#7c3aed',
+    '人間中心・学際融合型': '#0891b2',
+    '国家中枢・基盤研究型': '#dc2626',
+    '社会実装・産学連携型': '#16a34a',
+    'AI4S・産業連携型':     '#ca8a04',
+  };
+  var html = '<div class="three-col">'
+    + AI4S.BENCHMARK_DATA.map(function(b) {
+        var color = typeColorMap[b.type] || '#1a3a5c';
+        return '<div class="card" style="margin-bottom:0;">'
+          + '<div style="background:' + color + ';color:#fff;padding:14px 16px 10px;">'
+          + '<div style="font-size:.68rem;font-weight:700;background:rgba(255,255,255,.22);padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:6px;">' + b.type + '</div>'
+          + '<div style="font-size:1rem;font-weight:700;">' + b.name + '</div>'
+          + '<div style="font-size:.75rem;opacity:.85;margin-top:2px;">' + b.center + '</div>'
+          + '</div>'
+          + '<div class="card-body">'
+          + '<div style="font-size:.78rem;color:var(--text-muted);margin-bottom:4px;">🎯 重点領域</div>'
+          + '<div class="tag-list" style="margin-bottom:10px;">'
+          + b.domain.map(function(d) { return '<span class="tag">' + d + '</span>'; }).join('')
+          + '</div>'
+          + '<div style="font-size:.78rem;color:var(--text-muted);margin-bottom:4px;">🏢 主要連携企業</div>'
+          + '<div style="font-size:.82rem;margin-bottom:8px;">' + b.companies.join('、') + '</div>'
+          + '<div style="background:#fffbeb;border-left:3px solid var(--accent-gold);padding:6px 10px;border-radius:0 4px 4px 0;font-size:.78rem;color:#92400e;">'
+          + '💡 ' + b.insight
+          + '</div>'
+          + '</div>'
+          + '<div class="card-footer">'
+          + '<div class="relevance-indicator" title="岡大関連度">' + AI4S.renderRelevance(b.relevance, b.relevanceLevel) + '</div>'
+          + '</div>'
+          + '</div>';
+      }).join('')
+    + '</div>';
+  document.getElementById('benchmark-list').innerHTML = html;
+}
+
+// ── 産業連携ウォッチパネル ────────────────────────────────────
+function renderIndustryPanel() {
+  var html = '<div class="card"><div class="card-body">'
+    + AI4S.INDUSTRY_DATA.map(function(c) {
+        return '<div class="news-item">'
+          + '<div style="width:44px;height:44px;border-radius:10px;background:' + c.color + ';color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:800;flex-shrink:0;text-align:center;line-height:1.2;">' + c.name.slice(0, 3) + '</div>'
+          + '<div class="news-content">'
+          + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">'
+          + '<div class="news-title" style="margin-bottom:0;">' + c.name + '</div>'
+          + '<span class="priority-badge ' + AI4S.getPriorityClass(c.priority) + '">' + c.priority + '評価</span>'
+          + '</div>'
+          + '<div style="font-size:.75rem;color:var(--text-muted);margin-bottom:4px;">' + c.sector + '</div>'
+          + '<div class="news-meta"><span>🏛️ 連携先：' + c.univPartners.join('、') + '</span></div>'
+          + '<div class="news-insight">💡 ' + c.insight + '</div>'
+          + '</div>'
+          + '</div>';
+      }).join('')
+    + '</div></div>';
+  document.getElementById('industry-list').innerHTML = html;
+}
+
+// ── 岡大インサイトパネル ──────────────────────────────────────
+function renderInsightsPanel() {
+  var html = '<div class="card"><div class="card-body">'
+    + AI4S.INSIGHTS_DATA.map(function(ins) {
+        return '<div style="padding:14px 0;border-bottom:1px solid var(--border-light);">'
+          + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">'
+          + '<span class="priority-badge ' + AI4S.getPriorityClass(ins.priority) + '">' + ins.priority + '評価</span>'
+          + '<span style="font-size:.72rem;color:var(--text-muted);">⏰ ' + ins.urgency + '</span>'
+          + '</div>'
+          + '<div style="font-size:.92rem;font-weight:700;color:var(--text-main);line-height:1.4;margin-bottom:6px;">' + ins.title + '</div>'
+          + '<div style="font-size:.82rem;color:var(--text-muted);line-height:1.6;">' + ins.summary + '</div>'
+          + '</div>';
+      }).join('')
+    + '</div></div>';
+  document.getElementById('insights-list').innerHTML = html;
+}
+
+// ── 政策タイムラインパネル（全件） ────────────────────────────
+function renderTimelinePanel() {
+  var events = [
+    { date: '2026.04', title: '文科省AI for Science SPReAD公募開始（全国1000件対象）', type: 'tl-fund', desc: '人文・社会科学を含む全分野対象の萌芽的挑戦研究。応募締切に注意' },
+    { date: '2026.04', title: 'CREST・さきがけ・ACT-X 2026年度研究提案募集開始', type: 'tl-fund', desc: 'さきがけ・ACT-X締切5/26、CREST締切6/2' },
+    { date: '2026.03', title: '文部科学省×米DOE「AI for Science連携」意向表明', type: 'tl-intl', desc: '日米政府レベルのAI4S科学連携が正式に始動' },
+    { date: '2026.02', title: '「人工知能基本計画」閣議決定 → AI戦略の国家方針確定', type: 'tl-policy', desc: '「信頼できるAI」を軸とした5年間の国家AI計画が始動' },
+    { date: '2026.02', title: 'AI4S計算資源戦略増強（76億円）公募開始', type: 'tl-fund', desc: 'HPCI参加機関を対象とした計算基盤補助。申請締切4/15' },
+    { date: '2026.02', title: 'AI4S科学研究革新プログラム（370億円）基本方針確定', type: 'tl-fund', desc: 'チャレンジ型（50億円）の早期公募が予想される' },
+    { date: '2025.12', title: '人工知能基本計画 閣議決定', type: 'tl-policy', desc: '国家AI戦略の根幹が確立' },
+    { date: '2025.12', title: 'AI4S科学研究革新プログラム（370億円）予算成立', type: 'tl-fund', desc: '令和7年度補正予算で370億円基金が正式成立' },
+    { date: '2025.11', title: '筑波大学 AIオープンイノベーション拠点（DHI棟）発表', type: 'tl-univ', desc: 'Amazon・NVIDIA入居予定の共創ラボ型AI施設を公式発表' },
+    { date: '2025.02', title: '慶應義塾大学 AIキャンパス構想公表', type: 'tl-univ', desc: '塾長が「3年で世界最高峰AIキャンパス」を宣言' },
+  ];
+  var html = events.map(function(e) {
+    return '<div class="tl-item ' + e.type + '">'
+      + '<div class="tl-date">' + e.date + '</div>'
+      + '<div class="tl-title">' + e.title + '</div>'
+      + '<div class="tl-desc">' + e.desc + '</div>'
+      + '</div>';
+  }).join('');
+  document.getElementById('fullTimeline').innerHTML = html;
 }
 </script>
 </body>
