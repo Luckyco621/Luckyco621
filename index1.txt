@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>家庭紙・衛生用品 業界インテリジェンスダッシュボード</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --navy-light: #243358;
+    --navy-dark: #111b30;
+    --accent: #3b82f6;
+    --accent-light: #60a5fa;
+    --accent-dark: #2563eb;
+    --bg: #f1f5f9;
+    --card-bg: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --sidebar-w: 240px;
+    --header-h: 60px;
+    --badge-investment: #3b82f6;
+    --badge-patent: #8b5cf6;
+    --badge-rd: #10b981;
+    --badge-machine: #f97316;
+    --badge-packaging: #ec4899;
+    --badge-wet: #06b6d4;
+    --badge-tissue: #14b8a6;
+    --badge-other: #94a3b8;
+    --badge-regulation: #ef4444;
+    --badge-product: #84cc16;
+    --badge-env: #22c55e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', 'Yu Gothic', sans-serif; background: var(--bg); color: var(--text); }
+
+  /* HEADER */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+    background: var(--navy); color: #fff; display: flex; align-items: center;
+    justify-content: space-between; padding: 0 20px; z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-logo { font-size: 11px; font-weight: 700; background: var(--accent); padding: 3px 8px; border-radius: 4px; letter-spacing: 0.05em; }
+  .header-title { font-size: 14px; font-weight: 700; letter-spacing: 0.03em; }
+  .header-subtitle { font-size: 11px; color: #94a3b8; margin-top: 1px; }
+  .header-right { text-align: right; font-size: 12px; color: #94a3b8; }
+  .header-date { font-size: 14px; color: #e2e8f0; font-weight: 600; }
+
+  /* SIDEBAR */
+  aside {
+    position: fixed; top: var(--header-h); left: 0; bottom: 0; width: var(--sidebar-w);
+    background: var(--navy-dark); overflow-y: auto; z-index: 900;
+  }
+  .sidebar-section { padding: 12px 0 4px; }
+  .sidebar-label { font-size: 10px; color: #64748b; padding: 0 16px 4px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+    color: #94a3b8; cursor: pointer; font-size: 13px; transition: all 0.15s;
+    border-left: 3px solid transparent; text-decoration: none;
+  }
+  .nav-item:hover { background: rgba(59,130,246,0.1); color: #e2e8f0; border-left-color: var(--accent); }
+  .nav-item.active { background: rgba(59,130,246,0.15); color: #fff; border-left-color: var(--accent); font-weight: 600; }
+  .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+  .nav-count { margin-left: auto; background: rgba(59,130,246,0.3); color: var(--accent-light); font-size: 11px; padding: 1px 6px; border-radius: 10px; min-width: 35px; text-align: right; }
+
+  /* MAIN */
+  main {
+    margin-left: var(--sidebar-w); margin-top: var(--header-h);
+    padding: 24px; min-height: calc(100vh - var(--header-h));
+  }
+
+  /* SECTION */
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-header { margin-bottom: 20px; }
+  .section-title { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .section-desc { font-size: 13px; color: var(--text-muted); }
+
+  /* STAT CARDS */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-card {
+    background: var(--card-bg); border-radius: 10px; padding: 16px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07); border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+  }
+  .stat-card.green { border-left-color: #10b981; }
+  .stat-card.purple { border-left-color: #8b5cf6; }
+  .stat-card.orange { border-left-color: #f97316; }
+  .stat-num { font-size: 28px; font-weight: 800; color: var(--navy); line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  /* HIGHLIGHTS */
+  .highlights { background: linear-gradient(135deg, #1a2744 0%, #243358 100%); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+  .highlights-title { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .highlight-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .highlight-card { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 14px; border: 1px solid rgba(255,255,255,0.15); }
+  .highlight-card-rank { font-size: 22px; margin-bottom: 6px; }
+  .highlight-card-title { color: #e2e8f0; font-size: 13px; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+  .highlight-card-company { color: var(--accent-light); font-size: 12px; }
+  .highlight-card-impact { color: #fbbf24; font-size: 12px; margin-top: 8px; line-height: 1.4; }
+
+  /* FILTER BAR */
+  .filter-bar { background: var(--card-bg); border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border: 1px solid var(--border); display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .filter-bar label { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+  .filter-input { border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 13px; background: var(--bg); color: var(--text); outline: none; }
+  .filter-input:focus { border-color: var(--accent); }
+  .filter-input[type="text"] { width: 180px; }
+  .filter-count { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+
+  /* NEWS GRID */
+  .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px; }
+  .news-card {
+    background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .news-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateY(-1px); }
+  .news-card.hidden { display: none; }
+  .card-header { padding: 12px 14px 10px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
+  .card-date { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+  .card-badges { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+  .badge {
+    display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 12px;
+    font-size: 11px; font-weight: 600; white-space: nowrap;
+  }
+  .badge-company { background: #f1f5f9; color: #334155; }
+  .badge-cat { color: #fff; }
+  .badge-investment { background: var(--badge-investment); color: #fff; }
+  .badge-patent { background: var(--badge-patent); color: #fff; }
+  .badge-rd { background: var(--badge-rd); color: #fff; }
+  .badge-machine { background: var(--badge-machine); color: #fff; }
+  .badge-packaging { background: var(--badge-packaging); color: #fff; }
+  .badge-wet { background: var(--badge-wet); color: #fff; }
+  .badge-tissue { background: var(--badge-tissue); color: #fff; }
+  .badge-regulation { background: var(--badge-regulation); color: #fff; }
+  .badge-product { background: var(--badge-product); color: #fff; }
+  .badge-env { background: var(--badge-env); color: #fff; }
+  .badge-other { background: var(--badge-other); color: #fff; }
+  .badge-verify { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+  .card-body { padding: 12px 14px; }
+  .card-title { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.5; margin-bottom: 10px; }
+  .card-source { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; }
+  .card-source a { color: var(--accent); text-decoration: none; }
+  .card-source a:hover { text-decoration: underline; }
+  .card-summary-label { font-size: 11px; font-weight: 700; color: var(--navy); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+  .card-summary { font-size: 13px; color: var(--text); line-height: 1.6; margin-bottom: 10px; background: #f8fafc; padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--accent); }
+  .card-memo-label { font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 4px; }
+  .card-memo {
+    width: 100%; min-height: 44px; border: 1px solid var(--border); border-radius: 6px;
+    padding: 6px 10px; font-size: 12px; color: var(--text); background: #fffbeb;
+    font-family: inherit; resize: vertical; outline: none;
+  }
+  .card-memo:focus { border-color: var(--accent); background: #fff; }
+  .card-memo::placeholder { color: #94a3b8; }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+  .empty-state-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state-text { font-size: 14px; }
+
+  /* FOOTER */
+  footer { margin-left: var(--sidebar-w); background: var(--navy-dark); color: #64748b; font-size: 12px; text-align: center; padding: 16px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    :root { --sidebar-w: 0px; }
+    aside { display: none; }
+    main { margin-left: 0; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .highlight-cards { grid-template-columns: 1fr; }
+    footer { margin-left: 0; }
+    .mobile-menu-btn { display: flex !important; }
+  }
+  @media (max-width: 600px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .news-grid { grid-template-columns: 1fr; }
+    .filter-bar { flex-direction: column; align-items: stretch; }
+    .filter-input[type="text"] { width: 100%; }
+  }
+
+  /* MOBILE MENU */
+  .mobile-menu-btn { display: none; background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; padding: 4px; }
+  .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 850; }
+  .mobile-overlay.show { display: block; }
+  .mobile-aside { display: none; }
+  @media (max-width: 900px) {
+    .mobile-aside { display: block; }
+    aside.mobile-open { display: block; z-index: 901; }
+  }
+
+  /* DATE NAVIGATOR */
+  .date-nav-bar {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 16px; margin-bottom: 20px; display: flex; align-items: center;
+    gap: 10px; flex-wrap: wrap; box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .date-nav-label { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+  .date-nav-display {
+    font-size: 15px; font-weight: 700; color: var(--navy); min-width: 110px; text-align: center;
+  }
+  .date-nav-count { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+
+
+  aside::-webkit-scrollbar { width: 4px; }
+  aside::-webkit-scrollbar-track { background: transparent; }
+  aside::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+
+  /* PAGINATION */
+  .pagination { margin-top: 20px; margin-bottom: 8px; }
+  .pagination-controls { display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .pg-btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+  .pg-btn:hover:not(:disabled) { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .pg-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+  .pg-btn:disabled { opacity: 0.4; cursor: default; }
+  .pg-ellipsis { color: var(--text-muted); font-size: 13px; }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="メニュー">☰</button>
+    <div class="header-logo">大王製紙 技術開発部限定</div>
+    <div>
+      <div class="header-title">家庭紙・衛生用品 業界インテリジェンスダッシュボード</div>
+      <div class="header-subtitle">自動収集・AI要約 ／ 毎日更新</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-date" id="last-updated-date">―</div>
+    <div>最終更新: <span id="last-updated-time">―</span> JST</div>
+  </div>
+</header>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">ナビゲーション</div>
+    <a class="nav-item active" data-section="s-overview" onclick="showSection('s-overview',this)">
+      <span class="nav-icon">🏠</span> 総合（トップ）<span class="nav-count" id="cnt-overview"></span>
+    </a>
+    <a class="nav-item" data-section="s-rivals" onclick="showSection('s-rivals',this)">
+      <span class="nav-icon">🏭</span> 競合メーカー動向<span class="nav-count" id="cnt-rivals"></span>
+    </a>
+    <a class="nav-item" data-section="s-machine" onclick="showSection('s-machine',this)">
+      <span class="nav-icon">⚙️</span> おむつ加工機設備<span class="nav-count" id="cnt-machine"></span>
+    </a>
+    <a class="nav-item" data-section="s-packaging" onclick="showSection('s-packaging',this)">
+      <span class="nav-icon">📦</span> 包装機<span class="nav-count" id="cnt-packaging"></span>
+    </a>
+    <a class="nav-item" data-section="s-palletizer" onclick="showSection('s-palletizer',this)">
+      <span class="nav-icon">🤖</span> パレタイザー<span class="nav-count" id="cnt-palletizer"></span>
+    </a>
+    <a class="nav-item" data-section="s-tissue" onclick="showSection('s-tissue',this)">
+      <span class="nav-icon">🧻</span> ティシュー業界<span class="nav-count" id="cnt-tissue"></span>
+    </a>
+    <a class="nav-item" data-section="s-wet" onclick="showSection('s-wet',this)">
+      <span class="nav-icon">💧</span> ウェットティシュー<span class="nav-count" id="cnt-wet"></span>
+    </a>
+    <a class="nav-item" data-section="s-toilet" onclick="showSection('s-toilet',this)">
+      <span class="nav-icon">🚿</span> トイレット業界<span class="nav-count" id="cnt-toilet"></span>
+    </a>
+    <a class="nav-item" data-section="s-patent" onclick="showSection('s-patent',this)">
+      <span class="nav-icon">🔬</span> 競合他社特許<span class="nav-count" id="cnt-patent"></span>
+    </a>
+    <a class="nav-item" data-section="s-research" onclick="showSection('s-research',this)">
+      <span class="nav-icon">📚</span> 論文情報<span class="nav-count" id="cnt-research"></span>
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main>
+
+<!-- DATE NAVIGATOR (global — controls which day's news is shown) -->
+<div class="date-nav-bar" id="date-nav-bar">
+  <span class="date-nav-label">📅 表示日:</span>
+  <button class="pg-btn" id="btn-prev-day" onclick="navigateDate(1)" title="前の日">← 前の日</button>
+  <span class="date-nav-display" id="date-nav-display">―</span>
+  <button class="pg-btn" id="btn-next-day" onclick="navigateDate(-1)" title="次の日">次の日 →</button>
+  <select class="filter-input" id="date-select" onchange="selectDate(this.value)" style="max-width:160px;"></select>
+  <span class="date-nav-count" id="date-nav-count"></span>
+</div>
+
+  <!-- ① OVERVIEW -->
+  <div class="section active" id="s-overview">
+    <div class="section-header">
+      <div class="section-title">🏠 総合ダッシュボード</div>
+      <div class="section-desc" id="todayDate">全カテゴリーの最新業界情報を集約表示</div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num" id="total-count">―</div>
+        <div class="stat-label">📰 収集記事数</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-num" id="company-count">―</div>
+        <div class="stat-label">🏢 対象企業数</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-num">6</div>
+        <div class="stat-label">🗂️ カテゴリー数</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-num" id="patent-count">0</div>
+        <div class="stat-label">🔬 新規特許・研究開発</div>
+      </div>
+    </div>
+
+    <!-- TOP 3 HIGHLIGHTS -->
+    <div class="highlights" id="highlights-section">
+      <div class="highlights-title">🚨 本日のトップ3ハイライト <span style="font-size:12px;font-weight:400;color:#94a3b8;">― 大王製紙へのインパクト大</span></div>
+      <div class="highlight-cards" id="highlight-cards">
+        <!-- populated by renderHighlights() -->
+      </div>
+    </div>
+
+    <!-- FILTER -->
+    <div class="filter-bar" id="filter-overview">
+      <label>🔍 キーワード:</label>
+      <input type="text" class="filter-input" placeholder="企業名・キーワードで絞り込み..." oninput="filterCards('grid-overview',this.value,document.getElementById('sel-cat-overview').value,document.getElementById('sel-type-overview').value)" id="kw-overview">
+      <label>カテゴリー:</label>
+      <select class="filter-input" id="sel-cat-overview" onchange="filterCards('grid-overview',document.getElementById('kw-overview').value,this.value,document.getElementById('sel-type-overview').value)">
+        <option value="">すべて</option>
+        <option value="①">①日用品・衛生用品</option>
+        <option value="②">②製紙・パルプ</option>
+        <option value="③">③加工機メーカー</option>
+        <option value="④">④包装機・パレタイジング</option>
+        <option value="⑤">⑤ウェットティッシュ</option>
+        <option value="⑥">⑥家庭紙専業</option>
+      </select>
+      <label>情報種別:</label>
+      <select class="filter-input" id="sel-type-overview" onchange="filterCards('grid-overview',document.getElementById('kw-overview').value,document.getElementById('sel-cat-overview').value,this.value)">
+        <option value="">すべて</option>
+        <option value="投資">投資</option>
+        <option value="新製品">新製品</option>
+        <option value="規制">規制</option>
+        <option value="研究開発">研究開発</option>
+        <option value="環境">環境</option>
+        <option value="加工機技術">加工機技術</option>
+        <option value="包装機技術">包装機技術</option>
+      </select>
+      <span class="filter-count" id="fc-overview"></span>
+    </div>
+    <div class="news-grid" id="grid-overview"></div>
+  </div>
+
+  <!-- ② RIVALS -->
+  <div class="section" id="s-rivals">
+    <div class="section-header">
+      <div class="section-title">🏭 競合メーカー動向</div>
+      <div class="section-desc">カテゴリー①②：日用品・衛生用品メーカー ／ 製紙・パルプメーカーの最新動向</div>
+    </div>
+    <div class="filter-bar">
+      <label>🔍 キーワード:</label>
+      <input type="text" class="filter-input" placeholder="絞り込み..." oninput="filterCards('grid-rivals',this.value,'','')" id="kw-rivals">
+      <span class="filter-count" id="fc-rivals"></span>
+    </div>
+    <div class="news-grid" id="grid-rivals"></div>
+  </div>
+
+  <!-- ③ MACHINE -->
+  <div class="section" id="s-machine">
+    <div class="section-header">
+      <div class="section-title">⚙️ おむつ加工機設備メーカー</div>
+      <div class="section-desc">カテゴリー③：不織布・吸収体加工機メーカー（瑞光・GDM・Fameccanica）の最新情報</div>
+    </div>
+    <div class="filter-bar">
+      <label>🔍 キーワード:</label>
+      <input type="text" class="filter-input" placeholder="絞り込み..." oninput="filterCards('grid-machine',this.value,'','')" id="kw-machine">
+      <span class="filter-count" id="fc-machine"></span>
+    </div>
+    <div class="news-grid" id="grid-machine"></div>
+  </div>
+
+  <!-- ④ PACKAGING -->
+  <div class="section" id="s-packaging">
+    <div class="section-header">
+      <div class="section-title">📦 包装機</div>
+      <div class="section-desc">カテゴリー④：包装機関連の最新技術・製品情報（OPTIMA Packaging・ファナック）</div>
+    </div>
+    <div class="filter-bar">
+      <label>🔍 キーワード:</label>
+      <input type="text" class="filter-input" placeholder="絞り込み..." oninput="filterCards('grid-packaging',this.value,'','')" id="kw-packaging">
+      <span class="filter-count" id="fc-packaging"></span>
+    </div>
+    <div class="news-grid" id="grid-packaging"></div>
+  </div>
+
+  <!-- ⑤ PALLETIZER -->
+  <div class="section" id="s-palletizer">
+    <div class="section-header">
+      <div class="section-title">🤖 パレタイザー</div>
+      <div class="section-desc">カテゴリー④：パレタイジング設備・ロボット自動化の最新情報（ファナック）</div>
+    </div>
+    <div class="filter-bar">
+      <label>🔍 キーワード:</label>
+      <input type="text" class="filter-input" placeholder="絞り込み..." oninput="filterCards('grid-palletizer',this.value,'','')" id="kw-palletizer">
+      <span class="filter-count" id="fc-palletizer"></span>
+    </div>
+    <div class="news-grid" id="grid-palletizer"></div>
+  </div>
+
+  <!-- ⑥ TISSUE -->
+  <div class="section" id="s-tissue">
+    <div class="section-header">
+      <div class="section-title">🧻 ティシュー業界</div>
+      <div class="section-desc">カテゴリー⑥：ティッシュペーパー・家庭紙専業メーカー（カミ商事・丸富製紙）の最新情報</div>
+    </div>
+    <div class="filter-bar">
+      <label>🔍 キーワード:</label>
+      <input type="text" class="filter-input" placeholder="絞り込み..." oninput="filterCards('grid-tissue',this.value,'','')" id="kw-tissue">
+      <span class="filter-count" id="fc-tissue"></span>
+    </div>
+    <div class="news-grid" id="grid-tissue"></div>
+  </div>
+
+  <!-- ⑦ WET -->
+  <div class="section" id="s-wet">
+    <div class="section-header">
+      <div class="section-title">💧 ウェットティシュー業界</div>
+      <div class="section-desc">カテゴリー⑤：ウェットティッシュ製造メーカー（Winner Medical）の最新情報</div>
+    </div>
+    <div class="filter-bar">
+      <label>🔍 キーワード:</label>
+      <input type="text" class="filter-input" placeholder="絞り込み..." oninput="filterCards('grid-wet',this.value,'','')" id="kw-wet">
+      <span class="filter-count" id="fc-wet"></span>
+    </div>
+    <div class="news-grid" id="grid-wet"></div>
+  </div>
+
+  <!-- ⑧ TOILET -->
+  <div class="section" id="s-toilet">
+    <div class="section-header">
+      <div class="section-title">🚿 トイレット業界</div>
+      <div class="section-desc">全カテゴリーからトイレットペーパー関連情報を横断収集・表示</div>
+    </div>
+    <div class="filter-bar">
+      <label>🔍 キーワード:</label>
+      <input type="text" class="filter-input" placeholder="絞り込み..." oninput="filterCards('grid-toilet',this.value,'','')" id="kw-toilet">
+      <span class="filter-count" id="fc-toilet"></span>
+    </div>
+    <div class="news-grid" id="grid-toilet"></div>
+  </div>
+
+  <!-- ⑨ PATENT -->
+  <div class="section" id="s-patent">
+    <div class="section-header">
+      <div class="section-title">🔬 競合他社特許</div>
+      <div class="section-desc">全カテゴリーから特許関連情報を横断収集・表示</div>
+    </div>
+    <div class="filter-bar">
+      <label>🔍 キーワード:</label>
+      <input type="text" class="filter-input" placeholder="絞り込み..." oninput="filterCards('grid-patent',this.value,'','')" id="kw-patent">
+      <span class="filter-count" id="fc-patent"></span>
+    </div>
+    <div class="news-grid" id="grid-patent"></div>
+    <div class="empty-state" id="empty-patent" style="display:none;">
+      <div class="empty-state-icon">🔬</div>
+      <div class="empty-state-text">現時点で「特許」に分類された情報はありません。<br>直近の加工機・研究開発情報をご参照ください。</div>
+    </div>
+  </div>
+
+  <!-- ⑩ RESEARCH -->
+  <div class="section" id="s-research">
+    <div class="section-header">
+      <div class="section-title">📚 論文情報</div>
+      <div class="section-desc">全カテゴリーから研究開発・論文・学会発表情報を横断収集・表示</div>
+    </div>
+    <div class="filter-bar">
+      <label>🔍 キーワード:</label>
+      <input type="text" class="filter-input" placeholder="絞り込み..." oninput="filterCards('grid-research',this.value,'','')" id="kw-research">
+      <span class="filter-count" id="fc-research"></span>
+    </div>
+    <div class="news-grid" id="grid-research"></div>
+    <div class="empty-state" id="empty-research" style="display:none;">
+      <div class="empty-state-icon">📚</div>
+      <div class="empty-state-text">現時点で「研究開発・論文」に分類された情報はありません。<br>直近の技術・設備情報をご参照ください。</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  本ダッシュボードは自動収集・AI要約により作成。内容は各ソースを確認してください。 ／ 大王製紙株式会社 社内限定資料 ／ 無断外部共有禁止
+</footer>
+
+<script>
+// ============================================================
+// DATA (loaded from data/news_data.json)
+// ============================================================
+let DATA = [];      // items for the currently selected date
+let PATENTS = [];   // permanent patent archive (all dates)
+let DATES = {};     // {YYYY-MM-DD: [items] | null}  null = placeholder (not yet loaded)
+let SORTED_DATES = []; // dates sorted newest-first
+let SELECTED_DATE_IDX = 0;
+let VAULT = [];     // permanent_vault.json — all Bucket C items across all dates
+
+// ============================================================
+// BADGE MAPPING
+// ============================================================
+function getTypeBadgeClass(type) {
+  const m = {
+    '投資': 'badge-investment',
+    '特許': 'badge-patent',
+    '研究開発': 'badge-rd',
+    '加工機技術': 'badge-machine',
+    '包装機技術': 'badge-packaging',
+    '新製品': 'badge-product',
+    '環境': 'badge-env',
+    '規制': 'badge-regulation',
+  };
+  return m[type] || 'badge-other';
+}
+
+function getCatColor(cid) {
+  const m = {'①':'#3b82f6','②':'#8b5cf6','③':'#f97316','④':'#ec4899','⑤':'#06b6d4','⑥':'#14b8a6'};
+  return m[cid] || '#94a3b8';
+}
+
+// ============================================================
+// CARD BUILDER
+// ============================================================
+function buildCard(item, idx) {
+  const typeClass = getTypeBadgeClass(item.info_type);
+  const catColor = getCatColor(item.category_id);
+  const verifyBadge = item.confidence === '要確認' ? '<span class="badge badge-verify">⚠️ 要確認</span>' : '';
+  const permanentBadge = item.permanent_record ? '<span class="badge badge-patent">📌 永久保存</span>' : '';
+  const cardId = 'card-' + idx;
+
+  // Score badge (red ≥80, orange ≥60, blue ≥40, grey otherwise)
+  const score = item.score || 0;
+  let scoreColor = '#94a3b8';
+  if (score >= 80) scoreColor = '#ef4444';
+  else if (score >= 60) scoreColor = '#f97316';
+  else if (score >= 40) scoreColor = '#3b82f6';
+  const scoreBadge = score > 0
+    ? `<span class="badge" style="background:${scoreColor};color:#fff;">⚡ ${score}点</span>`
+    : '';
+
+  // Strategic impact analysis section
+  const impactSection = item.impact_analysis
+    ? `<div class="card-summary-label" style="margin-top:8px;">🎯 戦略的インパクト分析</div>`
+      + `<div class="card-summary" style="border-left-color:#ef4444;background:#fff5f5;">${item.impact_analysis}</div>`
+    : '';
+
+  return `
+    <div class="news-card" id="${cardId}" data-cat="${item.category_id}" data-type="${item.info_type}" data-company="${item.company}" data-title="${item.title}">
+      <div class="card-header">
+        <div style="flex:1;min-width:0;">
+          <div class="card-badges">
+            <span class="badge badge-company">🏢 ${item.company}</span>
+            <span class="badge badge-cat" style="background:${catColor}">${item.category_id} ${item.category_name}</span>
+            <span class="badge ${typeClass}">${item.info_type}</span>
+            ${scoreBadge}
+            ${verifyBadge}
+            ${permanentBadge}
+          </div>
+        </div>
+        <div class="card-date">📅 ${item.date}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${item.title}</div>
+        <div class="card-source">🔗 ソース: <a href="${item.url}" target="_blank" rel="noopener">${item.source_name}</a></div>
+        <div class="card-summary-label">🤖 AI要約</div>
+        <div class="card-summary">${item.summary}</div>
+        ${impactSection}
+        <div class="card-memo-label">📝 編集者メモ</div>
+        <textarea class="card-memo" placeholder="ここにメモを入力できます..."></textarea>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
+// POPULATE GRID (renders a slice of items)
+// ============================================================
+function populateGrid(gridId, items) {
+  const el = document.getElementById(gridId);
+  if (!el) return;
+  if (items.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">該当する情報がありません。</div></div>';
+    return;
+  }
+  el.innerHTML = items.map((item, i) => buildCard(item, gridId + '-' + i)).join('');
+}
+
+// ============================================================
+// PAGINATION
+// ============================================================
+const PAGE_STATE = {};
+const PAGE_SIZE = 20;
+
+function paginateGrid(gridId, items) {
+  PAGE_STATE[gridId] = { allItems: items, items: items, page: 0 };
+  renderPage(gridId);
+  updateFilterCount('fc-' + gridId.replace('grid-', ''), items.length);
+}
+
+function renderPage(gridId) {
+  const state = PAGE_STATE[gridId];
+  if (!state) return;
+  const { items, page } = state;
+  const start = page * PAGE_SIZE;
+  populateGrid(gridId, items.slice(start, start + PAGE_SIZE));
+  renderPagination(gridId);
+}
+
+function renderPagination(gridId) {
+  const state = PAGE_STATE[gridId];
+  if (!state) return;
+  const { items, page } = state;
+  const totalPages = Math.ceil(items.length / PAGE_SIZE);
+  const pgId = 'pg-' + gridId;
+  let pgEl = document.getElementById(pgId);
+  if (!pgEl) {
+    pgEl = document.createElement('div');
+    pgEl.id = pgId;
+    pgEl.className = 'pagination';
+    const gridEl = document.getElementById(gridId);
+    if (gridEl) gridEl.parentNode.insertBefore(pgEl, gridEl.nextSibling);
+  }
+  if (totalPages <= 1) { pgEl.innerHTML = ''; return; }
+  let html = '<div class="pagination-controls">';
+  html += '<button class="pg-btn"' + (page === 0 ? ' disabled' : '') + ' onclick="goPage(\'' + gridId + '\',' + (page - 1) + ')">◀ 前へ</button>';
+  const maxBtns = 7;
+  let startPg = Math.max(0, page - 3);
+  let endPg = Math.min(totalPages - 1, startPg + maxBtns - 1);
+  if (endPg - startPg < maxBtns - 1) startPg = Math.max(0, endPg - maxBtns + 1);
+  if (startPg > 0) html += '<button class="pg-btn" onclick="goPage(\'' + gridId + '\',0)">1</button><span class="pg-ellipsis">…</span>';
+  for (let i = startPg; i <= endPg; i++) {
+    html += '<button class="pg-btn' + (i === page ? ' active' : '') + '" onclick="goPage(\'' + gridId + '\',' + i + ')">' + (i + 1) + '</button>';
+  }
+  if (endPg < totalPages - 1) html += '<span class="pg-ellipsis">…</span><button class="pg-btn" onclick="goPage(\'' + gridId + '\',' + (totalPages - 1) + ')">' + totalPages + '</button>';
+  html += '<button class="pg-btn"' + (page === totalPages - 1 ? ' disabled' : '') + ' onclick="goPage(\'' + gridId + '\',' + (page + 1) + ')">次へ ▶</button>';
+  html += '</div>';
+  pgEl.innerHTML = html;
+}
+
+function goPage(gridId, page) {
+  if (!PAGE_STATE[gridId]) return;
+  PAGE_STATE[gridId].page = page;
+  renderPage(gridId);
+  const gridEl = document.getElementById(gridId);
+  if (gridEl) gridEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============================================================
+// FILTER (data-driven, works with pagination)
+// ============================================================
+function filterCards(gridId, kw, cat, type) {
+  const state = PAGE_STATE[gridId];
+  if (!state) return;
+  const kwLower = (kw || '').toLowerCase();
+  const filtered = state.allItems.filter(item => {
+    const matchKw = !kwLower || (item.title || '').toLowerCase().includes(kwLower) || (item.company || '').toLowerCase().includes(kwLower);
+    const matchCat = !cat || item.category_id === cat;
+    const matchType = !type || item.info_type === type;
+    return matchKw && matchCat && matchType;
+  });
+  // Deduplicate by URL to ensure unique article IDs; items without a URL are kept as-is
+  const seenUrls = new Set();
+  const uniqueFiltered = filtered.filter(item => {
+    const key = item.url || '';
+    if (!key) return true;
+    if (seenUrls.has(key)) return false;
+    seenUrls.add(key);
+    return true;
+  });
+  state.items = uniqueFiltered;
+  state.page = 0;
+  renderPage(gridId);
+  // Update filter-bar count
+  const fc = document.getElementById('fc-' + gridId.replace('grid-', ''));
+  if (fc) fc.textContent = uniqueFiltered.length + '件表示';
+  // Update sidebar nav count — overview always reflects total unique stored items
+  const sectionKey = gridId.replace('grid-', '');
+  if (sectionKey === 'overview') {
+    const cnt = document.getElementById('cnt-overview');
+    if (cnt) cnt.textContent = dedupeByUrl(DATA).length;
+  } else {
+    const cnt = document.getElementById('cnt-' + sectionKey);
+    if (cnt) cnt.textContent = uniqueFiltered.length;
+  }
+}
+
+// ============================================================
+// DATE NAVIGATION
+// ============================================================
+
+// Fetch a per-date JSON file on demand; calls callback(items) when ready.
+// Uses cached DATES[dateStr] if already loaded.
+function loadDateData(dateStr, callback) {
+  if (DATES[dateStr] && DATES[dateStr] !== null) {
+    callback(DATES[dateStr]);
+    return;
+  }
+  fetch('data/' + dateStr + '.json')
+    .then(function(r) { if (!r.ok) throw new Error('not found'); return r.json(); })
+    .then(function(dateData) {
+      var items = dateData.items || [];
+      items.sort(function(a, b) {
+        var sd = (b.score || 0) - (a.score || 0);
+        return sd !== 0 ? sd : (b.date || '').localeCompare(a.date || '');
+      });
+      DATES[dateStr] = items;
+      callback(items);
+    })
+    .catch(function() {
+      // Fall back to empty array if file not available
+      DATES[dateStr] = DATES[dateStr] || [];
+      callback(DATES[dateStr] || []);
+    });
+}
+
+function navigateDate(delta) {
+  SELECTED_DATE_IDX = Math.max(0, Math.min(SORTED_DATES.length - 1, SELECTED_DATE_IDX + delta));
+  updateDateNav();
+  var date = SORTED_DATES[SELECTED_DATE_IDX];
+  loadDateData(date, function(items) {
+    DATA = items;
+    initGrids();
+  });
+}
+
+function selectDate(dateStr) {
+  var idx = SORTED_DATES.indexOf(dateStr);
+  if (idx >= 0) {
+    SELECTED_DATE_IDX = idx;
+    updateDateNav();
+    loadDateData(dateStr, function(items) {
+      DATA = items;
+      initGrids();
+    });
+  }
+}
+
+function updateDateNav() {
+  var date = SORTED_DATES[SELECTED_DATE_IDX] || '';
+  var el = document.getElementById('date-nav-display');
+  if (el) el.textContent = date || '―';
+  var btnPrev = document.getElementById('btn-prev-day');
+  var btnNext = document.getElementById('btn-next-day');
+  if (btnPrev) btnPrev.disabled = SELECTED_DATE_IDX >= SORTED_DATES.length - 1;
+  if (btnNext) btnNext.disabled = SELECTED_DATE_IDX <= 0;
+  var sel = document.getElementById('date-select');
+  if (sel && date) sel.value = date;
+  var cnt = document.getElementById('date-nav-count');
+  if (cnt) {
+    var n = (DATES[date] || []).length;
+    cnt.textContent = n > 0 ? n + '件' : '';
+  }
+}
+
+function buildDateSelect() {
+  var sel = document.getElementById('date-select');
+  if (!sel) return;
+  sel.innerHTML = SORTED_DATES.map(function(d) {
+    return '<option value="' + d + '">' + d + '</option>';
+  }).join('');
+  if (SORTED_DATES[SELECTED_DATE_IDX]) sel.value = SORTED_DATES[SELECTED_DATE_IDX];
+}
+
+// ============================================================
+// SECTION SWITCH
+// ============================================================
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (el) el.classList.add('active');
+  closeMobileMenu();
+}
+
+// ============================================================
+// MOBILE MENU
+// ============================================================
+function toggleMobileMenu() {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+  document.getElementById('mobileOverlay').classList.toggle('show');
+}
+function closeMobileMenu() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('mobileOverlay').classList.remove('show');
+}
+
+// ============================================================
+// SET TODAY DATE
+// ============================================================
+function setTodayDate() {
+  var today = new Date();
+  var year = today.getFullYear();
+  var month = today.getMonth() + 1;
+  var date = today.getDate();
+  var days = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
+  var dayName = days[today.getDay()];
+  var dateStr = year + '年' + month + '月' + date + '日（' + dayName + '）';
+  var el = document.getElementById('todayDate');
+  if (el) {
+    el.textContent = '全カテゴリーの最新業界情報を集約表示 ― ' + dateStr;
+  }
+}
+
+// ============================================================
+// LAST UPDATED (reads last_updated from JSON)
+// ============================================================
+function setLastUpdated(isoString) {
+  if (!isoString) return;
+  try {
+    var dt = new Date(isoString);
+    var jst = new Date(dt.getTime() + 9 * 60 * 60 * 1000);
+    var wdays = ['日', '月', '火', '水', '木', '金', '土'];
+    var year = jst.getUTCFullYear();
+    var month = jst.getUTCMonth() + 1;
+    var day = jst.getUTCDate();
+    var dayName = wdays[jst.getUTCDay()];
+    var hh = String(jst.getUTCHours()).padStart(2, '0');
+    var mm = String(jst.getUTCMinutes()).padStart(2, '0');
+    var dateEl = document.getElementById('last-updated-date');
+    var timeEl = document.getElementById('last-updated-time');
+    if (dateEl) dateEl.textContent = year + '年' + month + '月' + day + '日（' + dayName + '）';
+    if (timeEl) timeEl.textContent = hh + ':' + mm;
+  } catch (e) {
+    console.warn('Could not parse last_updated:', isoString);
+  }
+}
+
+// ============================================================
+// RENDER TOP 3 HIGHLIGHTS
+// ============================================================
+var RANK_ICONS = ['🥇', '🥈', '🥉'];
+
+function renderHighlights(highlights) {
+  var container = document.getElementById('highlight-cards');
+  var section = document.getElementById('highlights-section');
+  if (!container) return;
+
+  // If no AI-generated highlights, build a fallback from the top-scored DATA items
+  if (!highlights || highlights.length === 0) {
+    if (!DATA || DATA.length === 0) {
+      if (section) section.style.display = 'none';
+      return;
+    }
+    highlights = DATA.slice(0, 3).map(function(d) {
+      return {
+        title: d.title || '',
+        company: d.company || '不明',
+        category: (d.category_name || '') + ' / ' + (d.info_type || ''),
+        date: d.date || '',
+        impact: d.impact_analysis || d.summary || d.title || '',
+        score: d.score || 0,
+        is_patent: d.permanent_record || d.info_type === '特許' || d.is_academic || false,
+      };
+    });
+  }
+
+  if (section) section.style.display = '';
+  container.innerHTML = highlights.map(function(h, i) {
+    var rank = RANK_ICONS[i] || '🏅';
+    var scoreHtml = h.score
+      ? ' <span style="background:rgba(239,68,68,0.3);color:#fca5a5;padding:1px 6px;border-radius:10px;font-size:11px;">Score: ' + h.score + '/100</span>'
+      : '';
+    var patentIcon = h.is_patent ? ' 🔬' : '';
+    return '<div class="highlight-card">'
+      + '<div class="highlight-card-rank">' + rank + scoreHtml + patentIcon + '</div>'
+      + '<div class="highlight-card-title">' + (h.title || '') + '</div>'
+      + '<div class="highlight-card-company">📌 ' + (h.category || '') + ' ／ ' + (h.date || '') + '</div>'
+      + '<div class="highlight-card-impact">⚡ ' + (h.impact || '') + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+// ============================================================
+// INIT GRIDS
+// ============================================================
+// Deduplicate an array of items by URL, returning unique items only.
+// Items without a URL are always kept (they cannot be reliably deduplicated).
+function dedupeByUrl(arr) {
+  var seen = new Set();
+  return arr.filter(function(d) {
+    var key = d.url || '';
+    if (!key) return true;  // no URL — keep unconditionally
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function initGrids() {
+  var uniqueData = dedupeByUrl(DATA);
+  paginateGrid('grid-overview', uniqueData);
+
+  // Total count = unique items for selected date
+  var uniqueTotal = uniqueData.length;
+  var totalEl = document.getElementById('total-count');
+  if (totalEl) totalEl.textContent = uniqueTotal;
+  var companyEl = document.getElementById('company-count');
+  if (companyEl) {
+    var uniqueCompanies = new Set(uniqueData.map(function(d) { return d.company; }).filter(function(c) { return c && c !== '不明'; }));
+    companyEl.textContent = uniqueCompanies.size;
+  }
+  var cntOverview = document.getElementById('cnt-overview');
+  if (cntOverview) cntOverview.textContent = uniqueTotal;
+
+  var rivals = dedupeByUrl(DATA.filter(function(d) { return d.category_id === '①' || d.category_id === '②'; }));
+  paginateGrid('grid-rivals', rivals);
+  document.getElementById('cnt-rivals').textContent = rivals.length;
+
+  var machine = dedupeByUrl(DATA.filter(function(d) { return d.category_id === '③'; }));
+  paginateGrid('grid-machine', machine);
+  document.getElementById('cnt-machine').textContent = machine.length;
+
+  var packagingKw = ['包装', 'パッケージ', 'フィル', 'OPTIMA', 'optima', '充填', '袋', 'ライン'];
+  var packaging = dedupeByUrl(DATA.filter(function(d) {
+    return d.category_id === '④' && (d.info_type === '包装機技術' || packagingKw.some(function(k) { return d.title.includes(k) || d.summary.includes(k); }));
+  }));
+  paginateGrid('grid-packaging', packaging);
+  document.getElementById('cnt-packaging').textContent = packaging.length;
+
+  var palletizerKw = ['パレタイ', 'ロボット', 'robot', 'ファナック', 'FANUC', '自動化', 'automation'];
+  var palletizer = dedupeByUrl(DATA.filter(function(d) {
+    return d.category_id === '④' && (palletizerKw.some(function(k) { return d.title.toLowerCase().includes(k.toLowerCase()) || d.summary.toLowerCase().includes(k.toLowerCase()); }) || d.company === 'ファナック');
+  }));
+  paginateGrid('grid-palletizer', palletizer);
+  document.getElementById('cnt-palletizer').textContent = palletizer.length;
+
+  var tissue = dedupeByUrl(DATA.filter(function(d) { return d.category_id === '⑥'; }));
+  paginateGrid('grid-tissue', tissue);
+  document.getElementById('cnt-tissue').textContent = tissue.length;
+
+  var wet = dedupeByUrl(DATA.filter(function(d) { return d.category_id === '⑤'; }));
+  paginateGrid('grid-wet', wet);
+  document.getElementById('cnt-wet').textContent = wet.length;
+
+  var toiletKw = ['トイレット', 'トイレ', '家庭紙', 'ティシュ', 'ティッシュ', 'tissue', 'Tissue', '家庭紙工業', '衛生用紙'];
+  var toilet = dedupeByUrl(DATA.filter(function(d) {
+    return toiletKw.some(function(k) { return d.title.includes(k) || d.summary.includes(k) || d.category_name.includes(k); });
+  }));
+  paginateGrid('grid-toilet', toilet);
+  document.getElementById('cnt-toilet').textContent = toilet.length;
+
+  // Patent section: VAULT (permanent Bucket C archive) merged with any patents in current date
+  var datePatents = dedupeByUrl(DATA.filter(function(d) { return d.info_type === '特許'; }));
+  var vaultPatents = dedupeByUrl(VAULT.filter(function(d) { return d.info_type === '特許' || d.permanent_record; }));
+  var allPatents = dedupeByUrl(vaultPatents.concat(PATENTS).concat(datePatents));
+  if (allPatents.length === 0) {
+    document.getElementById('empty-patent').style.display = 'block';
+    document.getElementById('grid-patent').innerHTML = '';
+  } else {
+    document.getElementById('empty-patent').style.display = 'none';
+    paginateGrid('grid-patent', allPatents);
+  }
+  document.getElementById('cnt-patent').textContent = allPatents.length || '0';
+  updateFilterCount('fc-patent', allPatents.length);
+
+  // Research (Academic) section: VAULT academic items merged with current date's research
+  var dateResearch = dedupeByUrl(DATA.filter(function(d) { return d.info_type === '研究開発' || d.is_academic; }));
+  var vaultAcademic = dedupeByUrl(VAULT.filter(function(d) { return d.is_academic || d.category_id === '⑦' || d.info_type === '研究開発'; }));
+  var allResearch = dedupeByUrl(vaultAcademic.concat(dateResearch));
+  if (allResearch.length === 0) {
+    document.getElementById('empty-research').style.display = 'block';
+    document.getElementById('grid-research').innerHTML = '';
+  } else {
+    paginateGrid('grid-research', allResearch);
+    document.getElementById('empty-research').style.display = 'none';
+  }
+  document.getElementById('cnt-research').textContent = allResearch.length || '0';
+  updateFilterCount('fc-research', allResearch.length);
+
+  var patentRd = dedupeByUrl(DATA.filter(function(d) { return d.info_type === '特許' || d.info_type === '研究開発' || d.is_academic; }));
+  document.getElementById('patent-count').textContent = dedupeByUrl(patentRd.concat(PATENTS).concat(VAULT)).length;
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  setTodayDate();
+
+  var newsDataPromise = fetch('data/news_data.json')
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .catch(function(e) { console.error('Error loading news_data.json:', e); return {}; });
+
+  var datesIndexPromise = fetch('data/dates_index.json')
+    .then(function(resp) { if (!resp.ok) return null; return resp.json(); })
+    .catch(function() { return null; });
+
+  var vaultPromise = fetch('data/permanent_vault.json')
+    .then(function(resp) { if (!resp.ok) return []; return resp.json(); })
+    .catch(function() { return []; });
+
+  Promise.all([newsDataPromise, datesIndexPromise, vaultPromise])
+    .then(function(results) {
+      var json = results[0];
+      var datesIndex = results[1];
+      var vault = results[2];
+      var highlights;
+
+      VAULT = Array.isArray(vault) ? vault : [];
+
+      if (Array.isArray(json)) {
+        // Legacy bare-array format — group by date
+        var allItems = json;
+        highlights = [];
+        PATENTS = [];
+        DATES = {};
+        allItems.forEach(function(item) {
+          var d = item.date || 'unknown';
+          if (!DATES[d]) DATES[d] = [];
+          DATES[d].push(item);
+        });
+      } else if (json.dates) {
+        // New date-bucket format
+        DATES = json.dates || {};
+        PATENTS = json.patents || [];
+        highlights = json.highlights || [];
+        setLastUpdated(json.last_updated);
+      } else {
+        // Legacy {last_updated, highlights, items} format — group by date
+        var allItems = (json.items) || [];
+        highlights = json.highlights || [];
+        PATENTS = [];
+        setLastUpdated(json.last_updated);
+        DATES = {};
+        allItems.forEach(function(item) {
+          var d = item.date || 'unknown';
+          if (!DATES[d]) DATES[d] = [];
+          DATES[d].push(item);
+        });
+      }
+
+      // Merge dates_index.json — adds any historical date placeholders not in DATES
+      if (datesIndex && Array.isArray(datesIndex)) {
+        datesIndex.forEach(function(d) {
+          if (!(d in DATES)) {
+            DATES[d] = null; // placeholder: will be fetched on demand
+          }
+        });
+        // dates_index is already sorted newest-first; use it as the canonical order
+        SORTED_DATES = datesIndex;
+      } else {
+        // Fall back to whatever dates we parsed from news_data.json
+        SORTED_DATES = Object.keys(DATES).sort().reverse();
+      }
+      SELECTED_DATE_IDX = 0;
+
+      // Sort each already-loaded date's items by score desc, then date desc
+      SORTED_DATES.forEach(function(d) {
+        if (DATES[d] && Array.isArray(DATES[d])) {
+          DATES[d].sort(function(a, b) {
+            var sd = (b.score || 0) - (a.score || 0);
+            return sd !== 0 ? sd : (b.date || '').localeCompare(a.date || '');
+          });
+        }
+      });
+
+      // Set DATA to most recent date's items (guaranteed non-null — loaded from news_data.json)
+      DATA = SORTED_DATES.length > 0 ? (DATES[SORTED_DATES[0]] || []) : [];
+
+      buildDateSelect();
+      updateDateNav();
+      renderHighlights(highlights);
+      initGrids();
+    })
+    .catch(function(e) {
+      console.error('Error in init:', e);
+      DATA = [];
+      PATENTS = [];
+      VAULT = [];
+      renderHighlights([]);
+      initGrids();
+    });
+}
+init();
+
+function updateFilterCount(id, n) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = n + '件表示';
+}
+</script>
+
+<script src="https://www.genspark.ai/sandbox_inspect.js"></script></body>
+</html>

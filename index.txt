@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI4S動向ナビ | 岡山大学 Executive Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- サイドバー -->
+<aside id="sidebar"></aside>
+
+<!-- メインコンテンツ -->
+<div id="main-wrapper">
+  <!-- トップバー -->
+  <header id="topbar"></header>
+
+  <!-- ページ本体 -->
+  <main id="page-content" class="fade-in">
+
+    <!-- ヘッダタイトル -->
+    <div class="page-title">
+      <h1>🏠 AI4S Executive Dashboard</h1>
+      <p>岡山大学リーダー・執行部・URA・CDのための戦略インテリジェンス — 政策・資金・他大学・企業動向を一覧</p>
+    </div>
+
+    <!-- 緊急アラートバー -->
+    <div class="alert-ticker">
+      <span class="ticker-label">🚨 緊急</span>
+      <span class="ticker-text">
+        ⚡ MEXT「AI for Scienceに不可欠な計算資源の戦略的増強」申請受付中（締切：2026/4/15）&nbsp;&nbsp;
+        ⚡ AI4S科学研究革新プログラム370億円基金の戦略方針が確定 &nbsp;&nbsp;
+        ⚡ 筑波大学DHI棟（共創ラボ型AI拠点）2026年12月竣工予定
+      </span>
+      <a href="policy.html" class="ticker-cta">詳細を確認 →</a>
+    </div>
+
+    <!-- KPIサマリー -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon blue">📋</div>
+        <div class="kpi-body">
+          <div class="kpi-label">進行中の公募・制度</div>
+          <div class="kpi-value">5<span style="font-size:1rem;font-weight:500">件</span></div>
+          <div class="kpi-trend alert">⚠ 2件 締切1ヶ月以内</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon gold">💰</div>
+        <div class="kpi-body">
+          <div class="kpi-label">国内AI4S関連予算（今年度）</div>
+          <div class="kpi-value">446<span style="font-size:1rem;font-weight:500">億円</span></div>
+          <div class="kpi-trend up">↑ 前年比 大幅増</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon red">🏛️</div>
+        <div class="kpi-body">
+          <div class="kpi-label">監視中の大学・研究機関</div>
+          <div class="kpi-value">6<span style="font-size:1rem;font-weight:500">機関</span></div>
+          <div class="kpi-trend up">↑ 3機関が拠点新設・拡張中</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon green">💡</div>
+        <div class="kpi-body">
+          <div class="kpi-label">岡大向け要対応インサイト</div>
+          <div class="kpi-value">5<span style="font-size:1rem;font-weight:500">件</span></div>
+          <div class="kpi-trend alert">🔴 1件 最優先（S評価）</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- アラートバー -->
+    <div class="alert-bar alert-danger">
+      <span>🚨</span>
+      <div>
+        <strong>【最優先・今月中に判断必要】</strong>
+        MEXT「AI for Scienceによる科学研究革新プログラム」基金（370億円）の戦略方針が確定。
+        チャレンジ型（50億円）は早期公募が予想される。URAを中心にした応募準備チームの編成を至急検討してください。
+        <a href="policy.html" style="color:#b91c1c;font-weight:700;">→ 公募詳細を確認</a>
+      </div>
+    </div>
+
+    <!-- メイン2カラム -->
+    <div class="two-col">
+
+      <!-- 今週の重要トピック -->
+      <div class="card">
+        <div class="card-header">
+          <h3>⚡ 今週の重要トピック</h3>
+          <a href="policy.html" class="see-all">すべて見る</a>
+        </div>
+        <div class="card-body" id="topTopics">
+          <!-- JSで生成 -->
+        </div>
+      </div>
+
+      <!-- 締切近い公募 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>⏰ 締切が近い公募・制度</h3>
+          <a href="policy.html" class="see-all">一覧へ</a>
+        </div>
+        <div class="card-body" id="deadlineItems">
+          <!-- JSで生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 大学ベンチマーク概要 -->
+    <div class="section-header">
+      <h2>🏛️ 注目大学の最新アクション</h2>
+      <a href="benchmark.html" class="see-all">比較表を見る</a>
+    </div>
+    <div class="three-col" id="benchCards">
+      <!-- JSで生成 -->
+    </div>
+
+    <!-- 下段 2カラム -->
+    <div class="two-col">
+
+      <!-- 企業連携ウォッチ -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🏢 注目企業の大学連携動向</h3>
+          <a href="industry.html" class="see-all">全企業を見る</a>
+        </div>
+        <div class="card-body" id="companyWatch">
+          <!-- JSで生成 -->
+        </div>
+      </div>
+
+      <!-- 岡大インサイトトップ3 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>💡 岡大への示唆 TOP 3</h3>
+          <a href="insights.html" class="see-all">全インサイトへ</a>
+        </div>
+        <div class="card-body" id="insightTop">
+          <!-- JSで生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 政策タイムライン（直近） -->
+    <div class="section-header" style="margin-top:8px;">
+      <h2>📅 政策タイムライン（直近）</h2>
+      <a href="timeline.html" class="see-all">全タイムラインへ</a>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="timeline-wrap" id="dashTimeline">
+          <!-- JSで生成 -->
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Google Fonts (Noto Sans JP) -->
+<script src="js/common.js"></script>
+<script>
+// ── ダッシュボード初期化 ───────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  AI4S.initSidebar('dashboard', '🏠 Executive Dashboard');
+
+  renderTopTopics();
+  renderDeadlineItems();
+  renderBenchCards();
+  renderCompanyWatch();
+  renderInsightTop();
+  renderDashTimeline();
+});
+
+// ── 今週の重要トピック ────────────────────────────────────────
+function renderTopTopics() {
+  const items = [
+    {
+      tag: '政策', title: '人工知能基本計画が閣議決定（令和7年12月）',
+      date: '2025-12-23', org: '内閣府',
+      insight: '「信頼できるAI」を国家方針の核として明文化。岡大のAI倫理・ガバナンス人材が活動しやすい環境に',
+      url: 'https://www.cao.go.jp/press/new_wave/20260206.html',
+    },
+    {
+      tag: '公募', title: 'AI4S研究革新プログラム（370億円）基本方針確定',
+      date: '2026-02-24', org: '文部科学省',
+      insight: '岡大応募に向けてURAが今すぐ動くべき最重要案件',
+      url: 'https://www.mext.go.jp/content/20260224-mxt_sinkou01-000047519_5.pdf',
+    },
+    {
+      tag: '大学', title: '慶應AIセンター塾長「3年で世界最高峰AIキャンパス」宣言',
+      date: '2026-02-17', org: '慶應義塾大学',
+      insight: '日本のAI大学競争が加速。地方大学のポジション取りは今年度が分岐点',
+      url: 'https://www.keio.ac.jp/',
+    },
+    {
+      tag: '公募', title: 'AI4S計算資源戦略増強（76億円）公募中',
+      date: '2026-02-05', org: '文部科学省',
+      insight: '計算基盤の整備体制（HPCI参加可否）を確認。中国地域大学連合での申請を타진',
+      url: 'https://www.mext.go.jp/b_menu/boshu/detail/mext_00503.html',
+    },
+    {
+      tag: '国際連携', title: '米国「GENESIS MISSION」× 日本AI4S戦略 連携合意',
+      date: '2026-01-26', org: '文部科学省 / 米DOE',
+      insight: '日米政府レベルでのAI4S連携が始動。岡大国際展開戦略に「AI4S」を位置づける機会',
+      url: 'https://www.mext.go.jp/content/20260310-mxt_sinkou01-000048034_1.pdf',
+    },
+  ];
+  const html = items.map(item => `
+    <div class="news-item">
+      <span class="news-tag ${AI4S.getTagClass(item.tag)}">${item.tag}</span>
+      <div class="news-content">
+        <div class="news-title"><a href="${item.url}" target="_blank">${item.title}</a></div>
+        <div class="news-meta">
+          <span>📅 ${AI4S.formatDate(item.date)}</span>
+          <span>🏢 ${item.org}</span>
+        </div>
+        <div class="news-insight">💡 ${item.insight}</div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('topTopics').innerHTML = html;
+}
+
+// ── 締切近い公募 ──────────────────────────────────────────────
+function renderDeadlineItems() {
+  const items = AI4S.POLICY_DATA
+    .filter(p => p.deadline)
+    .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
+    .slice(0, 4);
+
+  const html = items.map(item => {
+    const days = AI4S.daysUntil(item.deadline);
+    const daysClass = days <= 30 ? 'deadline-near' : '';
+    const daysLabel = days < 0 ? '期限切れ' : days === 0 ? '本日締切' : `残り${days}日`;
+    return `
+    <div class="news-item">
+      <div class="news-content" style="width:100%">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span class="news-tag ${AI4S.getTagClass(item.type)}">${item.type}</span>
+          <span class="priority-badge ${AI4S.getPriorityClass(item.priority)}">${item.priority}評価</span>
+          <span class="news-tag tag-fund" style="margin-left:auto;" >${item.status}</span>
+        </div>
+        <div class="news-title">${item.title}</div>
+        <div class="news-meta">
+          <span>🏢 ${item.org}</span>
+          <span>💰 ${item.budget}</span>
+          <span class="${daysClass}">⏰ ${daysLabel}（${item.deadline}）</span>
+        </div>
+        <div class="news-insight">💡 ${item.insight}</div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('deadlineItems').innerHTML = html;
+}
+
+// ── 注目大学カード ────────────────────────────────────────────
+function renderBenchCards() {
+  const featured = AI4S.BENCHMARK_DATA.slice(0, 3);
+  const typeColorMap = {
+    '基盤AI・国際連携型': '#1d4ed8',
+    'AI4S・共創施設型':   '#7c3aed',
+    '人間中心・学際融合型': '#0891b2',
+    '国家中枢・基盤研究型': '#dc2626',
+    '社会実装・産学連携型': '#16a34a',
+    'AI4S・産業連携型':   '#ca8a04',
+  };
+  const html = featured.map(b => {
+    const color = typeColorMap[b.type] || '#1a3a5c';
+    return `
+    <div class="card" style="margin-bottom:0;">
+      <div style="background:${color};color:#fff;padding:14px 16px 10px;">
+        <div style="font-size:0.68rem;font-weight:700;background:rgba(255,255,255,0.22);padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:6px;">${b.type}</div>
+        <div style="font-size:1.0rem;font-weight:700;">${b.name}</div>
+        <div style="font-size:0.75rem;opacity:0.85;margin-top:2px;">${b.center}</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:4px;">🎯 重点領域</div>
+        <div class="tag-list" style="margin-bottom:10px;">
+          ${b.domain.slice(0,3).map(d => `<span class="tag">${d}</span>`).join('')}
+        </div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:4px;">🏢 主要連携企業</div>
+        <div style="font-size:0.82rem;margin-bottom:8px;">${b.companies.slice(0,3).join('、')}</div>
+        <div style="background:#fffbeb;border-left:3px solid var(--accent);padding:6px 10px;border-radius:0 4px 4px 0;font-size:0.78rem;color:#92400e;">
+          💡 ${b.insight.length > 65 ? b.insight.slice(0,65)+'…' : b.insight}
+        </div>
+      </div>
+      <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="relevance-indicator" title="岡大関連度">
+          ${AI4S.renderRelevance(b.relevance, b.relevanceLevel)}
+        </div>
+        <a href="benchmark.html" class="btn btn-sm btn-outline">詳細を見る</a>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('benchCards').innerHTML = html;
+}
+
+// ── 企業ウォッチ ──────────────────────────────────────────────
+function renderCompanyWatch() {
+  const featured = AI4S.INDUSTRY_DATA.filter(c => c.priority === 'A').slice(0, 4);
+  const colorMap = { 'NVIDIA': '#76b900', 'Amazon (AWS)': '#ff9900', 'NTTグループ': '#0066cc', 'ユビー': '#009688' };
+  const html = featured.map(c => `
+    <div class="news-item">
+      <div style="width:36px;height:36px;border-radius:8px;background:${c.color};color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;flex-shrink:0;text-align:center;line-height:1.2;">${c.name.slice(0,3)}</div>
+      <div class="news-content">
+        <div class="news-title">${c.name} <span style="font-size:0.75rem;color:var(--text-muted);font-weight:400;">— ${c.sector}</span></div>
+        <div class="news-meta"><span>🏛️ 連携先：${c.univPartners.slice(0,2).join('、')}</span></div>
+        <div class="news-insight">💡 ${c.insight.length > 70 ? c.insight.slice(0,70)+'…' : c.insight}</div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('companyWatch').innerHTML = html;
+}
+
+// ── インサイトトップ3 ─────────────────────────────────────────
+function renderInsightTop() {
+  const top3 = AI4S.INSIGHTS_DATA.slice(0, 3);
+  const priorityColors = { S: '#dc2626', A: '#c2410c', B: '#a16207' };
+  const html = top3.map(ins => `
+    <div style="padding:10px 0;border-bottom:1px solid var(--border-light);">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+        <span class="priority-badge ${AI4S.getPriorityClass(ins.priority)}">${ins.priority}</span>
+        <span style="font-size:0.72rem;color:var(--text-muted);">⏰ ${ins.urgency}</span>
+      </div>
+      <div style="font-size:0.88rem;font-weight:600;color:var(--text-main);line-height:1.4;margin-bottom:5px;">
+        ${ins.title.replace('【最優先】', '').replace('【緊急】', '')}
+      </div>
+      <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:6px;">${ins.summary.slice(0,80)}…</div>
+      <a href="insights.html" class="btn btn-sm btn-gold">対応を確認する</a>
+    </div>
+  `).join('');
+  document.getElementById('insightTop').innerHTML = html;
+}
+
+// ── ダッシュボードタイムライン ─────────────────────────────────
+function renderDashTimeline() {
+  const events = [
+    { date: '2026.03', title: '文部科学省×米DOE「AI for Science連携」意向表明', type: 'tl-intl', desc: '日米政府レベルのAI4S科学連携が正式に始動' },
+    { date: '2026.02', title: '「人工知能基本計画」閣議決定 → AI戦略の国家方針確定', type: 'tl-policy', desc: '「信頼できるAI」を軸とした5年間の国家AI計画が始動' },
+    { date: '2026.02', title: 'AI4S計算資源戦略増強（76億円）公募開始', type: 'tl-fund', desc: 'HPCI参加機関を対象とした計算基盤補助。申請締切近い' },
+    { date: '2025.12', title: 'AI4S科学研究革新プログラム（370億円）予算成立', type: 'tl-fund', desc: '令和7年度補正予算で370億円基金が正式成立' },
+    { date: '2025.11', title: '筑波大学 AIオープンイノベーション拠点（DHI棟）発表', type: 'tl-univ', desc: 'Amazon・NVIDIA入居予定の共創ラボ型AI施設を公式発表' },
+  ];
+  const html = events.map(e => `
+    <div class="tl-item ${e.type}">
+      <div class="tl-date">${e.date}</div>
+      <div class="tl-title">${e.title}</div>
+      <div class="tl-desc">${e.desc}</div>
+    </div>
+  `).join('');
+  document.getElementById('dashTimeline').innerHTML = html;
+}
+</script>
+<script src="https://www.genspark.ai/sandbox_inspect.js"></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
