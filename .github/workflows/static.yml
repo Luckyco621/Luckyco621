@@ -6,6 +6,13 @@ on:
   push:
     branches: ["main"]
 
+  # Re-deploy whenever the news auto-update workflow finishes
+  # (bot pushes via GITHUB_TOKEN do not trigger the push event above)
+  workflow_run:
+    workflows: ["AI4S ニュース自動更新"]
+    types:
+      - completed
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
