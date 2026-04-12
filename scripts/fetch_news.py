@@ -2,8 +2,10 @@
 """
 fetch_news.py — AI4S Executive Dashboard データ自動更新スクリプト
 
-OpenRouter API を使用して、日本の AI4S（AI for Science）関連の
-最新動向・政策・公募情報を生成し、data/news_data.json に保存します。
+1. DuckDuckGo Search で「文部科学省 AI for Science」「大学 AI拠点」等を検索
+2. requests + BeautifulSoup でページ本文を抽出
+3. OpenRouter の無料モデルに実テキストを渡して JSON を生成
+4. data/news_data.json / dates_index.json に保存
 
 使用方法:
     OPENROUTER_API_KEY=your_key python scripts/fetch_news.py
@@ -11,26 +13,135 @@ OpenRouter API を使用して、日本の AI4S（AI for Science）関連の
 
 import json
 import os
+import re
 import sys
 import datetime
+import time
 import urllib.request
 import urllib.error
+import urllib.parse
+
+import requests
+from bs4 import BeautifulSoup
+from duckduckgo_search import DDGS
 
 
+# ---------------------------------------------------------------------------
+# 設定
+# ---------------------------------------------------------------------------
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-# 費用対効果の高いモデルを使用（必要に応じて変更可能）
-MODEL = os.environ.get("OPENROUTER_MODEL", "google/gemini-2.0-flash-001")
+
+# 0 残高でも使える無料モデル（プライマリ → フォールバック）
+FREE_MODELS = [
+    "deepseek/deepseek-r1:free",
+    "google/gemini-2.0-flash-exp:free",
+]
+MODEL = os.environ.get("OPENROUTER_MODEL", FREE_MODELS[0])
 
 OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "news_data.json")
 DATES_FILE  = os.path.join(os.path.dirname(__file__), "..", "data", "dates_index.json")
 
+# 検索クエリ（日本語・英語混在で幅広くカバー）
+SEARCH_QUERIES = [
+    "文部科学省 AI for Science 公募 2025 2026",
+    "大学 AI拠点 筑波大学 慶應義塾 AI4S",
+    "JST CREST さきがけ AI4S 公募",
+    "NEDO AMED AI 科学研究 大学 連携",
+    "Japan Ministry of Education AI for Science university hub",
+]
 
-PROMPT = """あなたは日本の大学・研究機関向けに AI4S（AI for Science）の情報を収集・整理する専門家です。
+MAX_RESULTS_PER_QUERY = 4   # 1クエリあたり最大取得件数
+MAX_BODY_CHARS        = 800  # 1ページあたり抽出文字数上限
+REQUEST_TIMEOUT       = 15   # HTTP タイムアウト（秒）
+
+
+# ---------------------------------------------------------------------------
+# Web スクレイピング
+# ---------------------------------------------------------------------------
+
+def search_duckduckgo(query: str, max_results: int = MAX_RESULTS_PER_QUERY) -> list[dict]:
+    """DuckDuckGo でテキスト検索し、結果リストを返す"""
+    try:
+        with DDGS() as ddgs:
+            results = list(ddgs.text(query, max_results=max_results))
+        return results
+    except Exception as exc:
+        print(f"[WARN] DuckDuckGo search failed for '{query}': {exc}", file=sys.stderr)
+        return []
+
+
+def fetch_page_text(url: str) -> str:
+    """URL のページ本文を取得し、プレーンテキストを返す（失敗時は空文字）"""
+    try:
+        headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (compatible; AI4SDashboard/1.0; "
+                "+https://luckyco621.github.io/Luckyco621/)"
+            )
+        }
+        resp = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "html.parser")
+        # script / style タグを除去
+        for tag in soup(["script", "style", "nav", "footer", "header"]):
+            tag.decompose()
+        text = soup.get_text(separator="\n", strip=True)
+        # 連続する空行を圧縮
+        text = re.sub(r"\n{3,}", "\n\n", text)
+        return text[:MAX_BODY_CHARS]
+    except Exception as exc:
+        print(f"[WARN] Failed to fetch {url}: {exc}", file=sys.stderr)
+        return ""
+
+
+def gather_web_context() -> str:
+    """複数クエリで検索し、スニペット＋本文を結合したコンテキスト文字列を返す"""
+    seen_urls: set[str] = set()
+    chunks: list[str] = []
+
+    for query in SEARCH_QUERIES:
+        print(f"[SEARCH] {query}", file=sys.stderr)
+        results = search_duckduckgo(query)
+        for r in results:
+            url   = r.get("href", "")
+            title = r.get("title", "")
+            body  = r.get("body", "")
+
+            if not url or url in seen_urls:
+                continue
+            seen_urls.add(url)
+
+            # DuckDuckGo スニペットだけでも価値あり
+            snippet = f"[SOURCE] {title}\n[URL] {url}\n{body}"
+
+            # ページ本文の追加取得（gov / ac.jp ドメインを優先）
+            domain = urllib.parse.urlparse(url).netloc
+            if any(d in domain for d in [".go.jp", ".ac.jp", ".or.jp", "jst.go", "mext.go"]):
+                page_text = fetch_page_text(url)
+                if page_text:
+                    snippet += f"\n--- page excerpt ---\n{page_text}"
+                time.sleep(0.5)  # 礼儀ある待機
+
+            chunks.append(snippet)
+
+    return "\n\n===\n\n".join(chunks)
+
+
+# ---------------------------------------------------------------------------
+# OpenRouter 呼び出し
+# ---------------------------------------------------------------------------
+
+ANALYSIS_PROMPT = """あなたは岡山大学の経営層向けに AI4S（AI for Science）情報を整理するアナリストです。
 
 今日の日付: {today}
 
-以下の JSON フォーマットで、日本の AI4S に関連する最新動向を 8 件生成してください。
-実際の公募・政策・研究成果の情報を基にしてください（創作は最小限に）。
+以下は、Web から収集した最新の AI4S 関連情報（実際のページ・検索結果）です:
+
+=== 収集情報 ===
+{web_context}
+=== 収集情報ここまで ===
+
+上記の実際の収集情報を基に、**厳密に以下の JSON フォーマットのみ**を返してください（説明・マークダウン不要）。
 
 {{
   "date": "{today}",
@@ -44,7 +155,7 @@ PROMPT = """あなたは日本の大学・研究機関向けに AI4S（AI for Sc
       "date": "YYYY-MM-DD",
       "org": "発信元機関名",
       "summary": "概要（100字以内）",
-      "impact_analysis": "岡山大学への示唆・影響（60字以内）",
+      "impact_analysis": "岡山大学経営層向けの戦略的示唆（60字以内）",
       "score": 95,
       "url": "https://..."
     }}
@@ -58,41 +169,39 @@ PROMPT = """あなたは日本の大学・研究機関向けに AI4S（AI for Sc
       "date": "YYYY-MM-DD",
       "org": "発信元機関名",
       "summary": "概要（120字以内）",
-      "impact_analysis": "岡山大学への示唆（80字以内）",
+      "impact_analysis": "岡山大学への戦略的示唆（80字以内）",
       "score": 80,
       "url": "https://..."
     }}
   ]
 }}
 
-対象カテゴリ:
-- 文部科学省・内閣府・JST・NEDO・AMEDの AI4S 関連公募・政策
-- 日本の主要大学（東大・筑波・慶應・阪大・東北大など）の AI4S 拠点・プロジェクト
-- 理研・産総研・NIIの AI4S 研究成果
-- 日米・日欧の AI4S 国際連携
-- NVIDIA・AWS・NTTなど企業の大学連携
-
-top_topics を 5 件、news を 8 件生成してください。
-JSON のみを返してください（説明文は不要）。"""
+重要なルール:
+- 収集情報に含まれる実際の URL・機関名・日付を優先して使うこと
+- 情報が不足する場合は推測を最小限にし、その旨を summary に反映すること
+- score は重要度（0–100）を岡山大学視点で評価すること
+- top_topics を 5 件、news を 8 件生成すること
+- JSON のみを返すこと（コードブロック・説明文は一切不要）"""
 
 
-def call_openrouter(api_key: str, today: str, now: str) -> dict:
-    """OpenRouter API を呼び出し、AI4S ニュースデータを取得する"""
-    prompt = PROMPT.format(today=today, now=now)
+def call_openrouter(api_key: str, today: str, now: str, web_context: str,
+                    model: str = MODEL) -> dict:
+    """OpenRouter API を呼び出し、解析済み JSON を返す"""
+    prompt = ANALYSIS_PROMPT.format(today=today, now=now, web_context=web_context)
 
     payload = json.dumps({
-        "model": MODEL,
+        "model": model,
         "messages": [
             {
                 "role": "system",
-                "content": "You are an expert assistant that returns only valid JSON with no markdown or explanation.",
+                "content": (
+                    "You are an expert analyst. "
+                    "Return ONLY valid JSON with no markdown fences or explanation."
+                ),
             },
-            {
-                "role": "user",
-                "content": prompt,
-            },
+            {"role": "user", "content": prompt},
         ],
-        "temperature": 0.7,
+        "temperature": 0.3,
         "max_tokens": 4096,
     }).encode("utf-8")
 
@@ -103,10 +212,12 @@ def call_openrouter(api_key: str, today: str, now: str) -> dict:
         "X-Title": "AI4S Executive Dashboard",
     }
 
-    req = urllib.request.Request(OPENROUTER_API_URL, data=payload, headers=headers, method="POST")
+    req = urllib.request.Request(
+        OPENROUTER_API_URL, data=payload, headers=headers, method="POST"
+    )
 
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        with urllib.request.urlopen(req, timeout=120) as resp:
             body = json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
         err_body = e.read().decode("utf-8", errors="replace")
@@ -114,29 +225,49 @@ def call_openrouter(api_key: str, today: str, now: str) -> dict:
 
     content = body["choices"][0]["message"]["content"].strip()
 
-    # モデルが markdown コードブロックを返す場合に対応
+    # マークダウン コードブロック除去
     if content.startswith("```"):
         lines = content.splitlines()
-        if len(lines) >= 3:
-            content = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])
-        elif len(lines) == 2:
-            content = lines[1]
+        end = -1 if lines[-1].strip() == "```" else len(lines)
+        content = "\n".join(lines[1:end])
 
     return json.loads(content)
 
 
+def call_openrouter_with_fallback(api_key: str, today: str, now: str,
+                                  web_context: str) -> dict:
+    """プライマリモデルが失敗した場合にフォールバックモデルを試みる"""
+    models_to_try = [MODEL] + [m for m in FREE_MODELS if m != MODEL]
+    last_exc: Exception = RuntimeError("No models available")
+
+    for model in models_to_try:
+        try:
+            print(f"[INFO] Trying model: {model}", file=sys.stderr)
+            result = call_openrouter(api_key, today, now, web_context, model)
+            print(f"[OK] Model succeeded: {model}", file=sys.stderr)
+            return result
+        except Exception as exc:
+            print(f"[WARN] Model {model} failed: {exc}", file=sys.stderr)
+            last_exc = exc
+
+    raise last_exc
+
+
+# ---------------------------------------------------------------------------
+# dates_index.json 更新
+# ---------------------------------------------------------------------------
+
 def update_dates_index(today: str) -> None:
     """dates_index.json を更新し、最新日付を先頭に追加する（最大30件保持）"""
-    dates_index = {"latest": today, "dates": [today]}
+    dates_index: dict = {"latest": today, "dates": [today]}
 
     if os.path.exists(DATES_FILE):
         try:
             with open(DATES_FILE, "r", encoding="utf-8") as f:
                 existing = json.load(f)
             existing_dates = existing.get("dates", [])
-            # 今日の日付を先頭に追加し、重複を除去
             merged = [today] + [d for d in existing_dates if d != today]
-            dates_index["dates"] = merged[:30]  # 最新30件を保持
+            dates_index["dates"] = merged[:30]
         except (json.JSONDecodeError, KeyError):
             pass
 
@@ -146,31 +277,43 @@ def update_dates_index(today: str) -> None:
     print(f"[OK] dates_index.json updated: {dates_index['dates'][:5]} ...")
 
 
+# ---------------------------------------------------------------------------
+# メイン
+# ---------------------------------------------------------------------------
+
 def main() -> None:
     api_key = os.environ.get("OPENROUTER_API_KEY", "").strip()
     if not api_key:
-        print("ERROR: OPENROUTER_API_KEY environment variable is not set.", file=sys.stderr)
+        print("ERROR: OPENROUTER_API_KEY is not set.", file=sys.stderr)
         sys.exit(1)
 
     today = datetime.date.today().isoformat()
     now   = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    print(f"[INFO] Fetching AI4S news via OpenRouter (model={MODEL}, date={today}) ...")
+    # Step 1: Web スクレイピング
+    print("[INFO] Step 1/3 — Scraping web for AI4S intelligence ...", file=sys.stderr)
+    web_context = gather_web_context()
+    print(f"[INFO] Collected {len(web_context)} chars of web context.", file=sys.stderr)
 
-    news_data = call_openrouter(api_key, today, now)
+    # Step 2: AI 分析
+    print(f"[INFO] Step 2/3 — Calling OpenRouter (primary={MODEL}) ...", file=sys.stderr)
+    news_data = call_openrouter_with_fallback(api_key, today, now, web_context)
 
-    # last_updated が含まれていない場合は補完
+    # Step 3: ファイル保存
+    print("[INFO] Step 3/3 — Saving results ...", file=sys.stderr)
     news_data.setdefault("last_updated", now)
     news_data.setdefault("date", today)
 
-    # data/ ディレクトリが存在しない場合は作成
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(news_data, f, ensure_ascii=False, indent=2)
 
-    print(f"[OK] news_data.json saved ({len(news_data.get('top_topics', []))} top topics, "
-          f"{len(news_data.get('news', []))} news items)")
+    print(
+        f"[OK] news_data.json saved "
+        f"({len(news_data.get('top_topics', []))} top topics, "
+        f"{len(news_data.get('news', []))} news items)"
+    )
 
     update_dates_index(today)
     print("[DONE] All files updated successfully.")

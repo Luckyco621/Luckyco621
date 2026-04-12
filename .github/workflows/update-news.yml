@@ -23,6 +23,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: 依存ライブラリをインストール
+        run: pip install -r requirements.txt
+
       - name: AI4S ニュースデータを取得
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
