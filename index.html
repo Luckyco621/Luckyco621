@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>每日资讯</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="site-logo">每日<span>资讯</span></span>
+    </div>
+  </header>
+
+  <!-- 全局加载进度条 -->
+  <div id="loading-indicator" hidden></div>
+
+  <!-- 全局错误提示 -->
+  <div id="error-message" hidden></div>
+
+  <main class="site-main">
+
+    <!-- 日期导航（横跨两列） -->
+    <section class="date-nav-section card" aria-label="日期选择">
+      <div class="card-header">
+        <span class="date-nav-label">日期</span>
+        <nav id="date-nav" aria-label="可选日期"></nav>
+      </div>
+    </section>
+
+    <!-- 主内容区 -->
+    <div class="content-area">
+
+      <!-- 热门话题 -->
+      <section class="card" aria-labelledby="top-topics-title">
+        <div class="card-header">
+          <h2 class="card-title" id="top-topics-title">🔥 热门话题</h2>
+          <span class="current-date" id="current-date-label"></span>
+        </div>
+        <div id="top-topics" role="list" aria-live="polite"></div>
+      </section>
+
+      <!-- 今日新闻 -->
+      <section class="card" aria-labelledby="news-list-title" style="margin-top: 20px;">
+        <div class="card-header">
+          <h2 class="card-title" id="news-list-title">📰 今日新闻</h2>
+        </div>
+        <div id="news-list" role="list" aria-live="polite"></div>
+      </section>
+
+    </div>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+
+      <!-- 永久资源库 -->
+      <section class="card" aria-labelledby="vault-title">
+        <div class="card-header">
+          <h2 class="card-title" id="vault-title">📌 常用资源</h2>
+        </div>
+        <div id="permanent-vault"></div>
+      </section>
+
+    </aside>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>每日资讯 &copy; <span id="footer-year"></span></p>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

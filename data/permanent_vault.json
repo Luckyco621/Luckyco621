@@ -1,0 +1,32 @@
+{
+  "resources": [
+    {
+      "id": 1,
+      "title": "MDN Web Docs",
+      "description": "The best resource for web development documentation.",
+      "url": "https://developer.mozilla.org",
+      "category": "documentation"
+    },
+    {
+      "id": 2,
+      "title": "GitHub",
+      "description": "Where the world builds software.",
+      "url": "https://github.com",
+      "category": "tools"
+    },
+    {
+      "id": 3,
+      "title": "Stack Overflow",
+      "description": "Q&A platform for developers.",
+      "url": "https://stackoverflow.com",
+      "category": "community"
+    },
+    {
+      "id": 4,
+      "title": "CSS Tricks",
+      "description": "Tips, tricks, and techniques on using CSS.",
+      "url": "https://css-tricks.com",
+      "category": "documentation"
+    }
+  ]
+}

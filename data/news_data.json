@@ -1,0 +1,101 @@
+{
+  "date": "2025-04-12",
+  "top_topics": [
+    {
+      "id": 1,
+      "title": "AI 大模型新进展",
+      "category": "tech",
+      "heat": 9823,
+      "summary": "多家科技巨头相继发布新一代大语言模型，性能大幅提升。",
+      "url": "#"
+    },
+    {
+      "id": 2,
+      "title": "全球经济形势分析",
+      "category": "finance",
+      "heat": 7641,
+      "summary": "IMF 发布最新预测报告，下调多国 GDP 增长预期。",
+      "url": "#"
+    },
+    {
+      "id": 3,
+      "title": "航天探索新突破",
+      "category": "science",
+      "heat": 6512,
+      "summary": "火星探测任务取得关键数据，为载人登陆奠定基础。",
+      "url": "#"
+    },
+    {
+      "id": 4,
+      "title": "新能源汽车市场动态",
+      "category": "industry",
+      "heat": 5308,
+      "summary": "一季度全球电动车销量同比增长 35%，头部品牌竞争加剧。",
+      "url": "#"
+    },
+    {
+      "id": 5,
+      "title": "网络安全威胁预警",
+      "category": "security",
+      "heat": 4897,
+      "summary": "安全机构发现新型勒索软件，已波及多个行业关键基础设施。",
+      "url": "#"
+    }
+  ],
+  "news": [
+    {
+      "id": 1,
+      "title": "OpenAI 发布 GPT-5，多模态能力大幅增强",
+      "category": "tech",
+      "source": "科技日报",
+      "published_at": "2025-04-12T08:00:00Z",
+      "summary": "GPT-5 在推理、代码生成和图像理解方面均有显著提升，API 今日起开放访问。",
+      "url": "#"
+    },
+    {
+      "id": 2,
+      "title": "A 股三大指数集体收涨，科技板块领涨",
+      "category": "finance",
+      "source": "财经网",
+      "published_at": "2025-04-12T09:30:00Z",
+      "summary": "上证综指上涨 1.2%，深证成指上涨 1.8%，创业板指涨幅达 2.3%。",
+      "url": "#"
+    },
+    {
+      "id": 3,
+      "title": "比亚迪发布第五代 DM 技术，综合油耗再创新低",
+      "category": "industry",
+      "source": "汽车之家",
+      "published_at": "2025-04-12T10:00:00Z",
+      "summary": "新一代混动系统热效率突破 46%，百公里综合油耗低至 3.8L。",
+      "url": "#"
+    },
+    {
+      "id": 4,
+      "title": "国际空间站完成最新舱段对接",
+      "category": "science",
+      "source": "新华社",
+      "published_at": "2025-04-12T06:15:00Z",
+      "summary": "新型实验舱顺利与国际空间站对接，将用于微重力材料科学研究。",
+      "url": "#"
+    },
+    {
+      "id": 5,
+      "title": "CISA 发布高危漏洞紧急补丁通知",
+      "category": "security",
+      "source": "安全内参",
+      "published_at": "2025-04-12T07:45:00Z",
+      "summary": "涉及主流操作系统的零日漏洞已被积极利用，建议立即更新系统补丁。",
+      "url": "#"
+    },
+    {
+      "id": 6,
+      "title": "教育部出台 AI 辅助教学指导意见",
+      "category": "education",
+      "source": "人民教育",
+      "published_at": "2025-04-12T11:00:00Z",
+      "summary": "明确中小学阶段引入 AI 辅助工具的使用规范，强调教师主导原则。",
+      "url": "#"
+    }
+  ]
+}
