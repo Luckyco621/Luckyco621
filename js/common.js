@@ -45,7 +45,7 @@
       type: '公募', title: 'AI4Sに不可欠な計算資源の戦略的増強（76億円）',
       org: '文部科学省', budget: '76億円', status: '受付中',
       deadline: '2026-04-15', priority: 'A',
-      insight: 'HPCI参加機関が対象。中国地域大学連合での連名申請を타진する。',
+      insight: 'HPCI参加機関が対象。中国地域大学連合での連名申請を探る。',
       url: 'https://www.mext.go.jp/b_menu/boshu/detail/mext_00503.html',
     },
     {
@@ -141,7 +141,7 @@
     {
       name: 'ユビー', sector: 'AI医療・ヘルステック', priority: 'A', color: '#009688',
       univPartners: ['東京大学', '慶應義塾大学', '京都大学'],
-      insight: '地方医療機関との連携を模索中。岡大附属病院との医療AIデータ連携を타진する。',
+      insight: '地方医療機関との連携を模索中。岡大附属病院との医療AIデータ連携を探る。',
     },
     {
       name: 'Preferred Networks', sector: '産業AI・ロボティクス', priority: 'B', color: '#e91e63',
@@ -273,7 +273,7 @@
 
   /** URL重複排除 */
   function dedupeByUrl(arr) {
-    var seen = new Set ? new Set() : { _d: {}, has: function(k) { return k in this._d; }, add: function(k) { this._d[k] = 1; } };
+    var seen = typeof Set !== 'undefined' ? new Set() : { _d: {}, has: function(k) { return k in this._d; }, add: function(k) { this._d[k] = 1; } };
     return arr.filter(function(d) {
       var key = d.url || '';
       if (!key) return true;
