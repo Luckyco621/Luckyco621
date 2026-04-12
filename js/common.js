@@ -239,6 +239,7 @@
       { id: 'industry',  icon: '🏢', label: '産業連携ウォッチ',     href: 'industry.html' },
       { id: 'insights',  icon: '💡', label: '岡大インサイト',       href: 'insights.html' },
       { id: 'timeline',  icon: '📅', label: '政策タイムライン',     href: 'timeline.html' },
+      { id: 'sources',   icon: '🗂️', label: '情報収集ソース一覧',   href: 'sources.html' },
     ];
 
     var sidebarEl = document.getElementById('sidebar');
