@@ -1,101 +1,164 @@
 {
-  "date": "2025-04-12",
+  "date": "2026-04-12",
+  "last_updated": "2026-04-12T00:00:00Z",
   "top_topics": [
     {
       "id": 1,
-      "title": "AI 大模型新进展",
-      "category": "tech",
-      "heat": 9823,
-      "summary": "多家科技巨头相继发布新一代大语言模型，性能大幅提升。",
-      "url": "#"
+      "title": "AI4S科学研究革新プログラム370億円基金方針確定",
+      "info_type": "政策",
+      "category": "policy",
+      "date": "2026-02-24",
+      "org": "文部科学省",
+      "summary": "「AI for Scienceによる科学研究革新プログラム」基金370億円の戦略方針が確定。チャレンジ型（50億円）は早期公募が予想される。",
+      "impact_analysis": "最優先。URA中心の応募準備チームを今すぐ編成すべき",
+      "score": 98,
+      "url": "https://www.mext.go.jp/content/20260224-mxt_sinkou01-000047519_5.pdf"
     },
     {
       "id": 2,
-      "title": "全球经济形势分析",
-      "category": "finance",
-      "heat": 7641,
-      "summary": "IMF 发布最新预测报告，下调多国 GDP 增长预期。",
-      "url": "#"
+      "title": "AI4S計算資源戦略増強76億円公募受付中",
+      "info_type": "公募",
+      "category": "fund",
+      "date": "2026-02-05",
+      "org": "文部科学省",
+      "summary": "HPCI参加機関を対象とした計算資源整備に係る公募。締切：2026/4/15。",
+      "impact_analysis": "中国地域大学連合での連名申請を早急に探ること",
+      "score": 95,
+      "url": "https://www.mext.go.jp/b_menu/boshu/detail/mext_00503.html"
     },
     {
       "id": 3,
-      "title": "航天探索新突破",
-      "category": "science",
-      "heat": 6512,
-      "summary": "火星探测任务取得关键数据，为载人登陆奠定基础。",
-      "url": "#"
+      "title": "筑波大学DHI棟2026年12月竣工予定",
+      "info_type": "大学",
+      "category": "university",
+      "date": "2026-03-10",
+      "org": "筑波大学",
+      "summary": "デジタルヘルスイノベーション棟（DHI棟）にAmazon・NVIDIAが入居予定。AI4S共創施設として国内最大規模。",
+      "impact_analysis": "岡大の医工連携との差別化戦略が急務",
+      "score": 90,
+      "url": "https://www.tsukuba.ac.jp/"
     },
     {
       "id": 4,
-      "title": "新能源汽车市场动态",
-      "category": "industry",
-      "heat": 5308,
-      "summary": "一季度全球电动车销量同比增长 35%，头部品牌竞争加剧。",
-      "url": "#"
+      "title": "日米GENESIS MISSION×AI4S戦略連携合意",
+      "info_type": "国際連携",
+      "category": "international",
+      "date": "2026-01-26",
+      "org": "文部科学省 / 米DOE",
+      "summary": "日米政府間でAI4S連携合意。GENESIS MISSIONとの協調により、日本の大学への国際共同研究機会が拡大。",
+      "impact_analysis": "岡大国際展開戦略に「AI4S」を明示的に位置づける好機",
+      "score": 87,
+      "url": "https://www.mext.go.jp/content/20260310-mxt_sinkou01-000048034_1.pdf"
     },
     {
       "id": 5,
-      "title": "网络安全威胁预警",
-      "category": "security",
-      "heat": 4897,
-      "summary": "安全机构发现新型勒索软件，已波及多个行业关键基础设施。",
-      "url": "#"
+      "title": "慶應義塾大学KAI「世界最高峰AIキャンパス」宣言",
+      "info_type": "大学",
+      "category": "university",
+      "date": "2026-02-17",
+      "org": "慶應義塾大学",
+      "summary": "塾長が「3年で世界最高峰AIキャンパス」を宣言。KAI（慶應義塾AI研究センター）を軸にFujitsu・NEC等と連携強化。",
+      "impact_analysis": "日本のAI大学競争が加速。地方大学の差別化は今年度が分岐点",
+      "score": 82,
+      "url": "https://www.keio.ac.jp/"
     }
   ],
   "news": [
     {
       "id": 1,
-      "title": "OpenAI 发布 GPT-5，多模态能力大幅增强",
-      "category": "tech",
-      "source": "科技日报",
-      "published_at": "2025-04-12T08:00:00Z",
-      "summary": "GPT-5 在推理、代码生成和图像理解方面均有显著提升，API 今日起开放访问。",
-      "url": "#"
+      "title": "JST CREST/さきがけAI4S領域 公募前説明会を開催",
+      "info_type": "公募",
+      "category": "fund",
+      "date": "2026-04-08",
+      "org": "JST",
+      "summary": "戦略的創造研究推進事業CREST・さきがけのAI4S新領域について、5月15日を締切とする公募前説明会が実施された。",
+      "impact_analysis": "岡大AI4S研究者がCRESTチームの核となる体制整備を検討",
+      "score": 85,
+      "url": "https://www.jst.go.jp/kisoken/crest/"
     },
     {
       "id": 2,
-      "title": "A 股三大指数集体收涨，科技板块领涨",
-      "category": "finance",
-      "source": "财经网",
-      "published_at": "2025-04-12T09:30:00Z",
-      "summary": "上证综指上涨 1.2%，深证成指上涨 1.8%，创业板指涨幅达 2.3%。",
-      "url": "#"
+      "title": "NEDO「AI活用型創薬研究支援」採択結果を公表",
+      "info_type": "政策",
+      "category": "policy",
+      "date": "2026-04-05",
+      "org": "NEDO",
+      "summary": "医薬品開発にAIを活用するプロジェクト採択結果が公表。製薬企業と大学の連携型で計10件が採択された。",
+      "impact_analysis": "岡大薬学部・医学部とAI4S研究者の連携プロジェクト立案を推奨",
+      "score": 80,
+      "url": "https://www.nedo.go.jp/"
     },
     {
       "id": 3,
-      "title": "比亚迪发布第五代 DM 技术，综合油耗再创新低",
-      "category": "industry",
-      "source": "汽车之家",
-      "published_at": "2025-04-12T10:00:00Z",
-      "summary": "新一代混动系统热效率突破 46%，百公里综合油耗低至 3.8L。",
-      "url": "#"
+      "title": "東北大学・理研 量子×AI融合拠点を共同設立",
+      "info_type": "大学",
+      "category": "university",
+      "date": "2026-04-01",
+      "org": "東北大学 / 理化学研究所",
+      "summary": "量子コンピューターとAIを融合させた計算科学拠点を共同設立。文科省「国際卓越研究大学」事業との連動を想定。",
+      "impact_analysis": "量子×AI領域での岡大の立ち位置の明確化が必要",
+      "score": 78,
+      "url": "https://www.tohoku.ac.jp/"
     },
     {
       "id": 4,
-      "title": "国际空间站完成最新舱段对接",
-      "category": "science",
-      "source": "新华社",
-      "published_at": "2025-04-12T06:15:00Z",
-      "summary": "新型实验舱顺利与国际空间站对接，将用于微重力材料科学研究。",
-      "url": "#"
+      "title": "NVIDIA、国内5大学にDGX SuperPOD提供を発表",
+      "info_type": "企業",
+      "category": "industry",
+      "date": "2026-03-28",
+      "org": "NVIDIA",
+      "summary": "NVIDIAが東大・阪大・東北大・筑波大・慶應に最新AI計算基盤DGX SuperPODを提供。産学連携によるAI4S研究を加速。",
+      "impact_analysis": "岡大はNVIDIA Inception Programへの参加・連携申請を検討すべき",
+      "score": 75,
+      "url": "https://www.nvidia.com/ja-jp/"
     },
     {
       "id": 5,
-      "title": "CISA 发布高危漏洞紧急补丁通知",
-      "category": "security",
-      "source": "安全内参",
-      "published_at": "2025-04-12T07:45:00Z",
-      "summary": "涉及主流操作系统的零日漏洞已被积极利用，建议立即更新系统补丁。",
-      "url": "#"
+      "title": "内閣府「戦略的イノベーション創造プログラム（SIP）」AI4S領域開始",
+      "info_type": "政策",
+      "category": "policy",
+      "date": "2026-03-20",
+      "org": "内閣府",
+      "summary": "SIP第3期にAI4S領域が新設。農業・医療・材料分野での実用化を目指す社会実装型の研究開発を支援。",
+      "impact_analysis": "農学・医学を有する岡大の強みと合致。早期情報収集が必要",
+      "score": 72,
+      "url": "https://www8.cao.go.jp/cstp/sip/"
     },
     {
       "id": 6,
-      "title": "教育部出台 AI 辅助教学指导意见",
-      "category": "education",
-      "source": "人民教育",
-      "published_at": "2025-04-12T11:00:00Z",
-      "summary": "明确中小学阶段引入 AI 辅助工具的使用规范，强调教师主导原则。",
-      "url": "#"
+      "title": "JST「大学発スタートアップ × AI4S」マッチングイベント",
+      "info_type": "企業",
+      "category": "industry",
+      "date": "2026-03-15",
+      "org": "JST",
+      "summary": "大学発AIスタートアップと研究機関のマッチングイベントを東京で開催。AI創薬・農業AI・気候変動AIの3分野に注力。",
+      "impact_analysis": "岡大発スタートアップ創出の好機。産学連携本部との連携を推奨",
+      "score": 68,
+      "url": "https://www.jst.go.jp/"
+    },
+    {
+      "id": 7,
+      "title": "AMED「疾患AI解析基盤整備」2次公募を開始",
+      "info_type": "公募",
+      "category": "fund",
+      "date": "2026-03-10",
+      "org": "AMED",
+      "summary": "医療AIデータ基盤の構築・共有化に係る2次公募を開始。医療機関・大学を対象に総額30億円規模。",
+      "impact_analysis": "岡大病院のデータを活用したAI4S医療研究への応募を検討",
+      "score": 65,
+      "url": "https://www.amed.go.jp/"
+    },
+    {
+      "id": 8,
+      "title": "産総研 AI4S材料探索プラットフォームをオープン化",
+      "info_type": "大学",
+      "category": "university",
+      "date": "2026-03-01",
+      "org": "産業技術総合研究所",
+      "summary": "材料探索に特化したAIプラットフォームをオープンソースで公開。大学・企業が無償で利用・改良できる体制を整備。",
+      "impact_analysis": "岡大材料科学分野での活用・共同研究機会を検討",
+      "score": 60,
+      "url": "https://www.aist.go.jp/"
     }
   ]
 }

@@ -18,6 +18,7 @@
   // フェッチ状態 (index1.txt 方式)
   // ============================================================
   var DATA = [];          // 選択中の日付のアイテム
+  var TOP_TOPICS = [];    // news_data.json の top_topics（重要トピック）
   var PATENTS = [];       // 特許アーカイブ
   var DATES = {};         // { 'YYYY-MM-DD': [items] | null }  null = 未ロード
   var SORTED_DATES = [];  // 降順ソート済み日付一覧
@@ -385,20 +386,29 @@
         if (Array.isArray(json)) {
           // Format 1: bare array
           groupByDate(json);
+          TOP_TOPICS = [];
           PATENTS = [];
         } else if (json && json.dates) {
           // Format 2: {dates: {'YYYY-MM-DD': [items]}, patents: [], highlights: [], last_updated: ''}
           DATES = json.dates || {};
+          TOP_TOPICS = [];
           PATENTS = json.patents || [];
           setLastUpdated(json.last_updated);
         } else if (json && (json.items || json.news || json.top_topics)) {
           // Format 3: {date, top_topics:[], news:[], items:[], last_updated:'', highlights:[]}
-          var allItems = json.items || json.news || json.top_topics || [];
+          // top_topics と news を分けて処理する
+          TOP_TOPICS = json.top_topics || [];
+          var allItems = json.items || json.news || [];
+          // news がなければ top_topics をフォールバックとして使用
+          if (allItems.length === 0 && TOP_TOPICS.length > 0) {
+            allItems = TOP_TOPICS;
+          }
           groupByDate(allItems);
           PATENTS = [];
           setLastUpdated(json.last_updated);
         } else {
           DATES = {};
+          TOP_TOPICS = [];
           PATENTS = [];
         }
 
@@ -440,6 +450,7 @@
         if (typeof onDataLoaded === 'function') {
           onDataLoaded({
             DATA: dedupeByUrl(DATA),
+            TOP_TOPICS: TOP_TOPICS,
             DATES: DATES,
             SORTED_DATES: SORTED_DATES,
             VAULT: VAULT,
@@ -452,7 +463,7 @@
         setLoading(false);
         showError('データ読み込みに失敗しました。再読み込みしてください。');
         if (typeof onDataLoaded === 'function') {
-          onDataLoaded({ DATA: [], DATES: {}, SORTED_DATES: [], VAULT: [], PATENTS: [] });
+          onDataLoaded({ DATA: [], TOP_TOPICS: [], DATES: {}, SORTED_DATES: [], VAULT: [], PATENTS: [] });
         }
       });
   }
@@ -485,6 +496,7 @@
 
     // ライブアクセサ
     get DATA() { return DATA; },
+    get TOP_TOPICS() { return TOP_TOPICS; },
     get DATES() { return DATES; },
     get SORTED_DATES() { return SORTED_DATES; },
     get VAULT() { return VAULT; },

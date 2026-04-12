@@ -184,8 +184,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // index1.txt方式でデータを動的にロード
   AI4S.init(function(data) {
-    if (data && data.DATA && data.DATA.length > 0) {
-      renderTopTopics(data.DATA);
+    // top_topics があれば優先して重要トピックセクションに表示
+    var topItems = (data.TOP_TOPICS && data.TOP_TOPICS.length > 0)
+      ? data.TOP_TOPICS
+      : (data.DATA && data.DATA.length > 0 ? data.DATA : null);
+    if (topItems) {
+      renderTopTopics(topItems);
     }
   });
 });
