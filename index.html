@@ -217,6 +217,122 @@
     </div>
   </div>
 
+  <!-- ===== 情報収集ソース一覧パネル ===== -->
+  <div id="panel-sources" class="panel">
+    <div class="page-title">
+      <h1>🗂️ AI4S情報収集 推奨クロール先一覧</h1>
+      <p>政策・研究・産業・資金動向の収集に活用できるウェブソース一覧です。定期的なクロール・モニタリングを推奨します。</p>
+    </div>
+
+    <div class="source-note">
+      💡 各ソースは定期的にクロール・チェックすることで、公募情報・政策動向・大学の最新アクションをいち早くキャッチできます。
+      J-STAGE・KAKENはAPIが公開されており、自動収集に対応しています。
+    </div>
+
+    <!-- 🏛️ 政府・政策機関 -->
+    <div class="sources-section">
+      <div class="card">
+        <div class="card-header">
+          <h3>🏛️ 政府・政策機関</h3>
+          <span class="section-badge badge-gov">Government</span>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table class="sources-table">
+            <thead>
+              <tr><th>機関名</th><th>URL</th><th>収集できる情報</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>内閣府 科学技術・イノベーション推進事務局</td><td><a href="https://www8.cao.go.jp/cstp/" target="_blank">https://www8.cao.go.jp/cstp/</a></td><td>AI戦略、科学技術基本計画</td></tr>
+              <tr><td>文部科学省</td><td><a href="https://www.mext.go.jp" target="_blank">https://www.mext.go.jp</a></td><td>大学政策、研究費配分</td></tr>
+              <tr><td>経済産業省 AI・データ政策</td><td><a href="https://www.meti.go.jp" target="_blank">https://www.meti.go.jp</a></td><td>産業AI動向、規制動向</td></tr>
+              <tr><td>総務省 情報通信政策</td><td><a href="https://www.soumu.go.jp" target="_blank">https://www.soumu.go.jp</a></td><td>ICT・AI政策</td></tr>
+              <tr><td>JST（科学技術振興機構）</td><td><a href="https://www.jst.go.jp" target="_blank">https://www.jst.go.jp</a></td><td>研究プロジェクト、産学連携</td></tr>
+              <tr><td>NEDO（新エネルギー・産業技術総合開発機構）</td><td><a href="https://www.nedo.go.jp" target="_blank">https://www.nedo.go.jp</a></td><td>AI技術開発プロジェクト</td></tr>
+              <tr><td>AMED（日本医療研究開発機構）</td><td><a href="https://www.amed.go.jp" target="_blank">https://www.amed.go.jp</a></td><td>医療AI・創薬</td></tr>
+              <tr><td>理化学研究所（RIKEN）</td><td><a href="https://www.riken.jp" target="_blank">https://www.riken.jp</a></td><td>基礎研究、AI研究成果</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🎓 大学・研究機関 -->
+    <div class="sources-section">
+      <div class="card">
+        <div class="card-header">
+          <h3>🎓 大学・研究機関</h3>
+          <span class="section-badge badge-univ">Academia</span>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table class="sources-table">
+            <thead>
+              <tr><th>機関名</th><th>URL</th><th>収集できる情報</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>東京大学 松尾・岩澤研究室</td><td><a href="https://weblab.t.u-tokyo.ac.jp" target="_blank">https://weblab.t.u-tokyo.ac.jp</a></td><td>AI研究最前線</td></tr>
+              <tr><td>東京大学 UTokyo AI</td><td><a href="https://ai.u-tokyo.ac.jp" target="_blank">https://ai.u-tokyo.ac.jp</a></td><td>大学全体のAI戦略</td></tr>
+              <tr><td>京都大学 情報学研究科</td><td><a href="https://www.i.kyoto-u.ac.jp" target="_blank">https://www.i.kyoto-u.ac.jp</a></td><td>AI・データサイエンス</td></tr>
+              <tr><td>大阪大学</td><td><a href="https://www.osaka-u.ac.jp" target="_blank">https://www.osaka-u.ac.jp</a></td><td>AI研究プロジェクト</td></tr>
+              <tr><td>名古屋大学</td><td><a href="https://www.nagoya-u.ac.jp" target="_blank">https://www.nagoya-u.ac.jp</a></td><td>産学連携AI</td></tr>
+              <tr><td>産業技術総合研究所（AIST）</td><td><a href="https://www.aist.go.jp" target="_blank">https://www.aist.go.jp</a></td><td>応用AI研究</td></tr>
+              <tr><td>国立情報学研究所（NII）</td><td><a href="https://www.nii.ac.jp" target="_blank">https://www.nii.ac.jp</a></td><td>AI・情報科学研究</td></tr>
+              <tr><td>理研 AIP（人工知能研究センター）</td><td><a href="https://aip.riken.jp" target="_blank">https://aip.riken.jp</a></td><td>人工知能研究センター</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 📰 ニュース・レポート・データベース -->
+    <div class="sources-section">
+      <div class="card">
+        <div class="card-header">
+          <h3>📰 ニュース・レポート・データベース</h3>
+          <span class="section-badge badge-news">News &amp; Data</span>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table class="sources-table">
+            <thead>
+              <tr><th>ソース</th><th>URL</th><th>収集できる情報</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>J-STAGE</td><td><a href="https://www.jstage.jst.go.jp" target="_blank">https://www.jstage.jst.go.jp</a></td><td>学術論文（API公開）</td></tr>
+              <tr><td>KAKEN（科研費データベース）</td><td><a href="https://kaken.nii.ac.jp" target="_blank">https://kaken.nii.ac.jp</a></td><td>研究費・プロジェクト情報</td></tr>
+              <tr><td>researchmap</td><td><a href="https://researchmap.jp" target="_blank">https://researchmap.jp</a></td><td>研究者・業績情報</td></tr>
+              <tr><td>日本経済新聞 AI関連</td><td><a href="https://www.nikkei.com" target="_blank">https://www.nikkei.com</a></td><td>産業・投資動向</td></tr>
+              <tr><td>ITmedia AI+</td><td><a href="https://www.itmedia.co.jp/aiplus/" target="_blank">https://www.itmedia.co.jp/aiplus/</a></td><td>AI業界ニュース</td></tr>
+              <tr><td>Ledge.ai</td><td><a href="https://ledge.ai" target="_blank">https://ledge.ai</a></td><td>AI4Sを含むAIニュース</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔬 特にAI4Sに直結するソース -->
+    <div class="sources-section">
+      <div class="card">
+        <div class="card-header">
+          <h3>🔬 特にAI4Sに直結するソース</h3>
+          <span class="section-badge badge-ai4s">AI4S Core</span>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table class="sources-table">
+            <thead>
+              <tr><th>ソース</th><th>URL</th><th>特徴</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>JST CREST・さきがけ</td><td><a href="https://www.jst.go.jp/kisoken/" target="_blank">https://www.jst.go.jp/kisoken/</a></td><td>AI×科学の最先端研究公募</td></tr>
+              <tr><td>内閣府 ムーンショット型研究</td><td><a href="https://www8.cao.go.jp/cstp/moonshot/" target="_blank">https://www8.cao.go.jp/cstp/moonshot/</a></td><td>大型AI4Sプロジェクト</td></tr>
+              <tr><td>BRIDGE（産学連携DB）</td><td><a href="https://www.jst.go.jp/tt/" target="_blank">https://www.jst.go.jp/tt/</a></td><td>技術移転情報</td></tr>
+              <tr><td>arXiv（日本研究者の英語論文）</td><td><a href="https://arxiv.org" target="_blank">https://arxiv.org</a></td><td>cs.AI, physics, biologyカテゴリ</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /#panel-sources -->
+
   </main>
 </div>
 
@@ -261,6 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
   AI4S.registerPanel('industry', renderIndustryPanel);
   AI4S.registerPanel('insights', renderInsightsPanel);
   AI4S.registerPanel('timeline', renderTimelinePanel);
+  AI4S.registerPanel('sources', function() {});
 });
 
 // ── 今週の重要トピック ────────────────────────────────────────

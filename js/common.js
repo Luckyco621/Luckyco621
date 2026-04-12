@@ -194,9 +194,10 @@
     'industry':  '🏢 産業連携ウォッチ',
     'insights':  '💡 岡大インサイト',
     'timeline':  '📅 政策タイムライン',
+    'sources':   '🗂️ 情報収集ソース一覧',
   };
   var PANEL_RENDERERS = {};
-  var INTERNAL_PAGE_IDS = ['dashboard', 'policy', 'benchmark', 'industry', 'insights', 'timeline'];
+  var INTERNAL_PAGE_IDS = ['dashboard', 'policy', 'benchmark', 'industry', 'insights', 'timeline', 'sources'];
 
   // ============================================================
   // ヘルパー関数
