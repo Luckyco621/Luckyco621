@@ -4,7 +4,7 @@ fetch_news.py — AI4S Executive Dashboard データ自動更新スクリプト
 
 1. DuckDuckGo Search で「文部科学省 AI for Science」「大学 AI拠点」等を検索
 2. requests + BeautifulSoup でページ本文を抽出
-3. OpenRouter の無料モデルに実テキストを渡して JSON を生成
+3. OpenRouter の google/gemini-2.0-flash-001 に実テキストを渡して JSON を生成
 4. data/news_data.json / dates_index.json に保存
 
 使用方法:
@@ -33,10 +33,8 @@ OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # 0 残高でも使える無料モデル（プライマリ → フォールバック）
 FREE_MODELS = [
-    "google/gemini-2.0-flash-lite-preview-02-05:free",
-    "meta-llama/llama-3-8b-instruct:free",
-    "qwen/qwen-2-7b-instruct:free",
-    "mistralai/mistral-7b-instruct:free",
+    "google/gemini-2.0-flash-001",
+    "deepseek/deepseek-chat",
 ]
 MODEL = os.environ.get("OPENROUTER_MODEL", FREE_MODELS[0])
 
