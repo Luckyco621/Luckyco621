@@ -23,7 +23,7 @@ import urllib.parse
 
 import requests
 from bs4 import BeautifulSoup
-from duckduckgo_search import DDGS
+from ddgs import DDGS
 
 
 # ---------------------------------------------------------------------------
@@ -33,8 +33,10 @@ OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # 0 残高でも使える無料モデル（プライマリ → フォールバック）
 FREE_MODELS = [
-    "deepseek/deepseek-r1:free",
-    "google/gemini-2.0-flash-exp:free",
+    "google/gemini-2.0-flash-lite-preview-02-05:free",
+    "meta-llama/llama-3-8b-instruct:free",
+    "qwen/qwen-2-7b-instruct:free",
+    "mistralai/mistral-7b-instruct:free",
 ]
 MODEL = os.environ.get("OPENROUTER_MODEL", FREE_MODELS[0])
 
