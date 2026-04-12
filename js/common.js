@@ -268,8 +268,9 @@
         + '<div class="sidebar-section-label">メニュー</div>'
         + navItems.map(function(item) {
             var isInternal = INTERNAL_PAGE_IDS.indexOf(item.id) !== -1;
+            var panelExists = !!document.getElementById('panel-' + item.id);
             var isActive = item.id === pageId;
-            if (isInternal) {
+            if (isInternal && panelExists) {
               return '<a class="nav-item' + (isActive ? ' active' : '') + '" data-panel="' + item.id + '" href="#" onclick="AI4S.navigate(\'' + item.id + '\'); return false;">'
                 + '<span class="nav-icon">' + item.icon + '</span>'
                 + item.label
