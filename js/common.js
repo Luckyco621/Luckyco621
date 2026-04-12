@@ -185,6 +185,20 @@
   ];
 
   // ============================================================
+  // SPA ナビゲーション設定
+  // ============================================================
+  var PANEL_TITLES = {
+    'dashboard': '🏠 Executive Dashboard',
+    'policy':    '📋 政策・公募',
+    'benchmark': '🏛️ 大学ベンチマーク',
+    'industry':  '🏢 産業連携ウォッチ',
+    'insights':  '💡 岡大インサイト',
+    'timeline':  '📅 政策タイムライン',
+  };
+  var PANEL_RENDERERS = {};
+  var INTERNAL_PAGE_IDS = ['dashboard', 'policy', 'benchmark', 'industry', 'insights', 'timeline'];
+
+  // ============================================================
   // ヘルパー関数
   // ============================================================
   function getTagClass(tag) {
@@ -253,10 +267,19 @@
         + '<nav class="sidebar-nav">'
         + '<div class="sidebar-section-label">メニュー</div>'
         + navItems.map(function(item) {
-            return '<a class="nav-item' + (item.id === pageId ? ' active' : '') + '" href="' + item.href + '">'
-              + '<span class="nav-icon">' + item.icon + '</span>'
-              + item.label
-              + '</a>';
+            var isInternal = INTERNAL_PAGE_IDS.indexOf(item.id) !== -1;
+            var isActive = item.id === pageId;
+            if (isInternal) {
+              return '<a class="nav-item' + (isActive ? ' active' : '') + '" data-panel="' + item.id + '" href="#" onclick="AI4S.navigate(\'' + item.id + '\'); return false;">'
+                + '<span class="nav-icon">' + item.icon + '</span>'
+                + item.label
+                + '</a>';
+            } else {
+              return '<a class="nav-item' + (isActive ? ' active' : '') + '" href="' + item.href + '">'
+                + '<span class="nav-icon">' + item.icon + '</span>'
+                + item.label
+                + '</a>';
+            }
           }).join('')
         + '</nav>';
     }
@@ -469,6 +492,46 @@
   }
 
   // ============================================================
+  // SPA ナビゲーション関数
+  // ============================================================
+
+  /** パネルにレンダラーを登録する */
+  function registerPanel(panelId, renderFn) {
+    PANEL_RENDERERS[panelId] = renderFn;
+  }
+
+  /** 指定パネルを表示し、サイドバーとトップバーを更新する */
+  function navigate(panelId) {
+    // 全パネル非表示
+    var panels = document.querySelectorAll('.panel');
+    for (var i = 0; i < panels.length; i++) {
+      panels[i].classList.remove('active');
+    }
+    // 対象パネル表示
+    var target = document.getElementById('panel-' + panelId);
+    if (target) {
+      target.classList.add('active');
+    }
+    // サイドバーのアクティブ状態更新
+    var navItems = document.querySelectorAll('.nav-item[data-panel]');
+    for (var j = 0; j < navItems.length; j++) {
+      var matches = navItems[j].getAttribute('data-panel') === panelId;
+      navItems[j].classList.toggle('active', matches);
+    }
+    // トップバータイトル更新
+    var titleEl = document.querySelector('.topbar-title');
+    if (titleEl) {
+      titleEl.textContent = PANEL_TITLES[panelId] || panelId;
+    }
+    // スクロールをトップに戻す
+    window.scrollTo(0, 0);
+    // パネルのレンダラー呼び出し
+    if (PANEL_RENDERERS[panelId]) {
+      PANEL_RENDERERS[panelId]();
+    }
+  }
+
+  // ============================================================
   // Public API
   // ============================================================
   window.AI4S = {
@@ -487,6 +550,10 @@
 
     // UI初期化
     initSidebar: initSidebar,
+
+    // SPA ナビゲーション
+    navigate: navigate,
+    registerPanel: registerPanel,
 
     // データ取得 (index1.txt 方式)
     init: init,

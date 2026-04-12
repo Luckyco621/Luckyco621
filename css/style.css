@@ -551,6 +551,10 @@ a:hover { text-decoration: underline; }
 #sidebar::-webkit-scrollbar-track { background: transparent; }
 #sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 2px; }
 
+/* ── SPA Panels ────────────────────────────── */
+.panel { display: none; }
+.panel.active { display: block; }
+
 /* ── Responsive ────────────────────────────── */
 @media (max-width: 1024px) {
   .three-col { grid-template-columns: 1fr 1fr; }
