@@ -156,6 +156,10 @@ function renderDateNav(dates, activeDate) {
   const container = document.getElementById('date-nav');
   if (!container) return;
 
+  // Track current active date via data attribute so the click handler
+  // always reads the most up-to-date value.
+  container.dataset.activeDate = activeDate;
+
   container.innerHTML = dates
     .map(
       (date) => `
@@ -172,7 +176,7 @@ function renderDateNav(dates, activeDate) {
     if (!btn) return;
 
     const date = btn.dataset.date;
-    if (date === activeDate) return;
+    if (date === container.dataset.activeDate) return;
 
     container.querySelectorAll('.date-btn').forEach((b) => {
       b.classList.toggle('active', b.dataset.date === date);
@@ -180,7 +184,7 @@ function renderDateNav(dates, activeDate) {
     });
 
     await loadDateContent(date);
-    activeDate = date;
+    container.dataset.activeDate = date;
   });
 }
 
